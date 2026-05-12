@@ -135,6 +135,36 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); over
 .acc-card-badge.current { background: #ffebee; color: #e53935; border: 1px solid #ffcdd2; }
 .acc-card-badge.demo { background: #e3f2fd; color: #1976d2; border: 1px solid #bbdefb; }
 
+
+/* ═══════ SUB NAVIGATION ═══════ */
+.sub-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 1.5rem;
+  background: var(--blue-dark, #1565c0);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  flex-wrap: nowrap;
+}
+.sub-nav::-webkit-scrollbar { height: 2px; }
+.sub-nav-link {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.sub-nav-link:hover { color: #fff; background: rgba(255,255,255,0.12); }
+.sub-nav-link.active { color: #fff; background: rgba(255,255,255,0.2); font-weight: 600; }
+
 /* ═══════ MAIN LAYOUT ═══════ */
 .main-container { display: flex; margin-top: 56px; min-height: calc(100vh - 56px); }
 
@@ -628,6 +658,21 @@ body.dark-mode .saved-account-card { background: #1a1a3e !important; }
   </div>
 </div>
 
+<!-- SUB NAVIGATION -->
+<div class="sub-nav" id="sub-nav">
+  <a class="sub-nav-link active" onclick="switchTab('dashboard', this)" data-tab="dashboard"><i class="fas fa-th-large"></i> Dashboard</a>
+  <a class="sub-nav-link" onclick="switchTab('bot-builder', this)" data-tab="bot-builder"><i class="fas fa-cube"></i> Bot Builder</a>
+  <a class="sub-nav-link" onclick="switchTab('live-prices', this)" data-tab="live-prices"><i class="fas fa-chart-line"></i> Live Prices</a>
+  <a class="sub-nav-link" onclick="switchTab('charts', this)" data-tab="charts"><i class="fas fa-chart-area"></i> Charts</a>
+  <a class="sub-nav-link" onclick="switchTab('manual', this)" data-tab="manual"><i class="fas fa-hand-pointer"></i> Manual Trader</a>
+  <a class="sub-nav-link" onclick="switchTab('speedbot', this)" data-tab="speedbot"><i class="fas fa-bolt"></i> Speedbot</a>
+  <a class="sub-nav-link" onclick="switchTab('dual-edge', this)" data-tab="dual-edge"><i class="fas fa-code-branch"></i> Dual Edge</a>
+  <a class="sub-nav-link" onclick="switchTab('apex-market', this)" data-tab="apex-market"><i class="fas fa-globe"></i> Apex Market</a>
+  <a class="sub-nav-link" onclick="switchTab('tutorials', this)" data-tab="tutorials"><i class="fas fa-graduation-cap"></i> Tutorials</a>
+  <a class="sub-nav-link" onclick="switchTab('reports', this)" data-tab="reports"><i class="fas fa-file-alt"></i> Reports</a>
+</div>
+
+
 <!-- MAIN CONTAINER -->
 <div class="main-container">
   <!-- SIDEBAR -->
@@ -641,6 +686,13 @@ body.dark-mode .saved-account-card { background: #1a1a3e !important; }
     <div class="sidebar-section">Trading</div>
     <a class="sidebar-item" onclick="switchTab('manual', this)"><i class="fas fa-hand-pointer"></i> <span>Manual Trader</span></a>
     <a class="sidebar-item" onclick="switchTab('copy-trading', this)"><i class="fas fa-users"></i> <span>Copy Trading</span></a>
+        <div class="sidebar-section">Bots</div>
+    <a class="sidebar-item" onclick="switchTab('speedbot', this)"><i class="fas fa-bolt"></i> <span>Speedbot</span></a>
+    <a class="sidebar-item" onclick="switchTab('dual-edge', this)"><i class="fas fa-code-branch"></i> <span>Dual Edge</span></a>
+    <a class="sidebar-item" onclick="switchTab('apex-market', this)"><i class="fas fa-globe"></i> <span>Apex Market</span></a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">Help</div>
+    <a class="sidebar-item" onclick="switchTab('tutorials', this)"><i class="fas fa-graduation-cap"></i> <span>Tutorials</span></a>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section">Account</div>
     <a class="sidebar-item" onclick="switchTab('reports', this)"><i class="fas fa-file-alt"></i> <span>Reports</span></a>
@@ -1027,6 +1079,86 @@ body.dark-mode .saved-account-card { background: #1a1a3e !important; }
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:2rem;text-align:center;">
         <i class="fas fa-users" style="font-size:3rem;color:#ddd;margin-bottom:1rem;"></i>
         <p style="color:var(--text-muted);">Copy trading coming soon.</p>
+      </div>
+    </div>
+
+    <!-- SPEEDBOT -->
+    <div class="content-panel" id="panel-speedbot">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:3rem;text-align:center;">
+        <i class="fas fa-bolt" style="font-size:3rem;color:#f59e0b;margin-bottom:1rem;display:block;"></i>
+        <h3 style="margin-bottom:0.5rem;">Speedbot</h3>
+        <p style="color:var(--text-muted);margin-bottom:1.5rem;">High-frequency tick-based trading engine. Coming soon.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:1rem;max-width:400px;margin:0 auto;text-align:left;">
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">Planned features:</div>
+          <div style="font-size:0.82rem;display:flex;flex-direction:column;gap:0.4rem;">
+            <span><i class="fas fa-check-circle" style="color:var(--green);margin-right:0.5rem;"></i>Ultra-fast tick execution</span>
+            <span><i class="fas fa-check-circle" style="color:var(--green);margin-right:0.5rem;"></i>Configurable tick triggers</span>
+            <span><i class="fas fa-check-circle" style="color:var(--green);margin-right:0.5rem;"></i>Auto stake progression</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DUAL EDGE -->
+    <div class="content-panel" id="panel-dual-edge">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:3rem;text-align:center;">
+        <i class="fas fa-code-branch" style="font-size:3rem;color:#8b5cf6;margin-bottom:1rem;display:block;"></i>
+        <h3 style="margin-bottom:0.5rem;">Dual Edge</h3>
+        <p style="color:var(--text-muted);margin-bottom:1.5rem;">Simultaneous Rise & Fall trading on dual contracts. Coming soon.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:1rem;max-width:400px;margin:0 auto;text-align:left;">
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">Planned features:</div>
+          <div style="font-size:0.82rem;display:flex;flex-direction:column;gap:0.4rem;">
+            <span><i class="fas fa-check-circle" style="color:var(--green);margin-right:0.5rem;"></i>Dual contract execution</span>
+            <span><i class="fas fa-check-circle" style="color:var(--green);margin-right:0.5rem;"></i>Hedge mode toggle</span>
+            <span><i class="fas fa-check-circle" style="color:var(--green);margin-right:0.5rem;"></i>Smart exit on profit</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- APEX MARKET -->
+    <div class="content-panel" id="panel-apex-market">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:3rem;text-align:center;">
+        <i class="fas fa-globe" style="font-size:3rem;color:#06b6d4;margin-bottom:1rem;display:block;"></i>
+        <h3 style="margin-bottom:0.5rem;">Apex Market</h3>
+        <p style="color:var(--text-muted);margin-bottom:1.5rem;">Advanced multi-market analysis and trading hub. Coming soon.</p>
+        <div style="background:var(--bg);border-radius:6px;padding:1rem;max-width:400px;margin:0 auto;text-align:left;">
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">Planned features:</div>
+          <div style="font-size:0.82rem;display:flex;flex-direction:column;gap:0.4rem;">
+            <span><i class="fas fa-check-circle" style="color:var(--green);margin-right:0.5rem;"></i>Multi-market scanner</span>
+            <span><i class="fas fa-check-circle" style="color:var(--green);margin-right:0.5rem;"></i>Market heat map</span>
+            <span><i class="fas fa-check-circle" style="color:var(--green);margin-right:0.5rem;"></i>Volatility index tracker</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TUTORIALS -->
+    <div class="content-panel" id="panel-tutorials">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:2rem;">
+        <h3 style="margin-bottom:1.5rem;"><i class="fas fa-graduation-cap" style="color:var(--green);margin-right:0.5rem;"></i>Tutorials & Guides</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;">
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
+            <div style="font-size:1.5rem;margin-bottom:0.8rem;">🚀</div>
+            <div style="font-weight:700;margin-bottom:0.4rem;">Getting Started</div>
+            <p style="font-size:0.8rem;color:var(--text-muted);">How to connect your Deriv account and make your first trade.</p>
+          </div>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
+            <div style="font-size:1.5rem;margin-bottom:0.8rem;">🤖</div>
+            <div style="font-weight:700;margin-bottom:0.4rem;">Bot Builder Guide</div>
+            <p style="font-size:0.8rem;color:var(--text-muted);">Build your first automated strategy using the visual editor.</p>
+          </div>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
+            <div style="font-size:1.5rem;margin-bottom:0.8rem;">📊</div>
+            <div style="font-weight:700;margin-bottom:0.4rem;">Risk Management</div>
+            <p style="font-size:0.8rem;color:var(--text-muted);">How to set stop-loss, take-profit and manage your stake sizes.</p>
+          </div>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
+            <div style="font-size:1.5rem;margin-bottom:0.8rem;">📈</div>
+            <div style="font-weight:700;margin-bottom:0.4rem;">Reading the Markets</div>
+            <p style="font-size:0.8rem;color:var(--text-muted);">Understanding volatility indices and synthetic instruments.</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -2769,19 +2901,19 @@ function loadSoundSetting() {
 // NAVIGATION
 // ═══════════════════════════════════════════════════════
 function switchTab(tabName, el) {
+  // Update top-nav
   document.querySelectorAll('.top-nav-link').forEach(l => l.classList.remove('active'));
-  if (el && el.classList) el.classList.add('active');
-  else {
-    const map = { 'dashboard': 0, 'bot-builder': 1, 'live-prices': 2, 'charts': 3 };
-    const links = document.querySelectorAll('.top-nav-link');
-    if (map[tabName] !== undefined && links[map[tabName]]) links[map[tabName]].classList.add('active');
-  }
+  // Update sub-nav
+  document.querySelectorAll('.sub-nav-link').forEach(l => l.classList.remove('active'));
+  const subLink = document.querySelector('.sub-nav-link[data-tab="' + tabName + '"]');
+  if (subLink) subLink.classList.add('active');
+  // Update sidebar
   document.querySelectorAll('.sidebar-item').forEach(l => l.classList.remove('active'));
-  const smap = { 'dashboard': 0, 'bot-builder': 1, 'live-prices': 2, 'charts': 3, 'manual': 4, 'copy-trading': 5, 'reports': 6 };
-  const items = document.querySelectorAll('.sidebar-item');
-  if (smap[tabName] !== undefined && items[smap[tabName]]) items[smap[tabName]].classList.add('active');
+  if (el && el.classList && el.classList.contains('sidebar-item')) el.classList.add('active');
+  // Show correct panel
   document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-' + tabName).classList.add('active');
+  const panel = document.getElementById('panel-' + tabName);
+  if (panel) panel.classList.add('active');
 }
 
 function switchBuilderPanel(name, el) {
