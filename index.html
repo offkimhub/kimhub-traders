@@ -136,6 +136,69 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); over
 .acc-card-badge.demo { background: #e3f2fd; color: #1976d2; border: 1px solid #bbdefb; }
 
 
+
+/* ═══════ SPEEDBOT ═══════ */
+.sb-status-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.75rem 1.2rem; margin-bottom: 1rem;
+}
+.sb-status-indicator { display: flex; align-items: center; gap: 0.6rem; }
+.sb-status-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--text-muted); display: inline-block;
+}
+.sb-status-dot.running { background: var(--green); box-shadow: 0 0 8px var(--green); animation: sbpulse 1s infinite; }
+.sb-status-dot.stopped { background: var(--red); }
+@keyframes sbpulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+.sb-status-text { font-size: 1rem; font-weight: 800; letter-spacing: 1px; color: var(--text-muted); }
+.sb-status-text.running { color: var(--green); }
+.sb-status-text.stopped { color: var(--red); }
+.sb-live-info { display: flex; gap: 1.5rem; align-items: center; }
+.sb-live-item { font-size: 0.82rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.4rem; }
+.sb-layout { display: grid; grid-template-columns: 340px 1fr; gap: 1rem; }
+@media (max-width: 900px) { .sb-layout { grid-template-columns: 1fr; } }
+.sb-config-panel { display: flex; flex-direction: column; gap: 1rem; }
+.sb-right-panel { display: flex; flex-direction: column; gap: 1rem; }
+.sb-section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+.sb-section-title { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.sb-field { margin-bottom: 0.8rem; }
+.sb-field label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.3rem; }
+.sb-field input, .sb-field select { width: 100%; padding: 0.45rem 0.7rem; border: 1px solid var(--border); border-radius: 5px; font-size: 0.82rem; background: var(--bg); color: var(--text); outline: none; }
+.sb-field input:focus, .sb-field select:focus { border-color: var(--green); }
+.sb-toggle-row { display: flex; align-items: center; gap: 0.8rem; }
+.sb-toggle { position: relative; display: inline-block; width: 36px; height: 20px; }
+.sb-toggle input { opacity: 0; width: 0; height: 0; }
+.sb-toggle-slider { position: absolute; cursor: pointer; inset: 0; background: #ccc; border-radius: 20px; transition: 0.3s; }
+.sb-toggle-slider:before { content:''; position:absolute; width:14px; height:14px; left:3px; bottom:3px; background:#fff; border-radius:50%; transition:0.3s; }
+.sb-toggle input:checked + .sb-toggle-slider { background: var(--green); }
+.sb-toggle input:checked + .sb-toggle-slider:before { transform: translateX(16px); }
+.sb-run-btn { flex:1; padding: 0.7rem; background: var(--green); color: #fff; border: none; border-radius: 6px; font-size: 0.88rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: 0.2s; }
+.sb-run-btn:hover:not(:disabled) { background: var(--green-dark); }
+.sb-run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.sb-stop-btn { padding: 0.7rem 1.2rem; background: var(--red); color: #fff; border: none; border-radius: 6px; font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
+.sb-stop-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.sb-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+.sb-stat-card { background: var(--bg); border-radius: 6px; padding: 0.7rem; text-align: center; }
+.sb-stat-label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.2rem; }
+.sb-stat-value { font-size: 1.1rem; font-weight: 700; }
+.sb-stat-value.green { color: var(--green); }
+.sb-stat-value.red { color: var(--red); }
+.sb-log { height: 280px; overflow-y: auto; font-family: var(--font-mono); font-size: 0.72rem; display: flex; flex-direction: column; gap: 0.2rem; }
+.sb-log-empty { color: var(--text-muted); text-align: center; margin-top: 2rem; }
+.sb-log-entry { padding: 0.25rem 0.5rem; border-radius: 3px; }
+.sb-log-entry.info { color: var(--text-secondary); }
+.sb-log-entry.buy { background: #e6f5f4; color: var(--green-dark); }
+.sb-log-entry.win { background: #e6f5f4; color: var(--green-dark); font-weight: 700; }
+.sb-log-entry.loss { background: var(--red-light); color: var(--red); font-weight: 700; }
+.sb-log-entry.warn { color: var(--orange); font-weight: 600; }
+body.dark-mode .sb-log-entry.buy { background: #0d3d38; }
+body.dark-mode .sb-log-entry.win { background: #0d3d38; }
+body.dark-mode .sb-log-entry.loss { background: #3d1212; }
+body.dark-mode .sb-section { background: #16213e; }
+body.dark-mode .sb-stat-card { background: #1a1a3e; }
+body.dark-mode .sb-status-bar { background: #16213e; }
+
 /* ═══════ SUB NAVIGATION ═══════ */
 .sub-nav {
   display: flex;
@@ -1084,16 +1147,184 @@ body.dark-mode .saved-account-card { background: #1a1a3e !important; }
 
     <!-- SPEEDBOT -->
     <div class="content-panel" id="panel-speedbot">
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:3rem;text-align:center;">
-        <i class="fas fa-bolt" style="font-size:3rem;color:#f59e0b;margin-bottom:1rem;display:block;"></i>
-        <h3 style="margin-bottom:0.5rem;">Speedbot</h3>
-        <p style="color:var(--text-muted);margin-bottom:1.5rem;">High-frequency tick-based trading engine. Coming soon.</p>
-        <div style="background:var(--bg);border-radius:6px;padding:1rem;max-width:400px;margin:0 auto;text-align:left;">
-          <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">Planned features:</div>
-          <div style="font-size:0.82rem;display:flex;flex-direction:column;gap:0.4rem;">
-            <span><i class="fas fa-check-circle" style="color:var(--green);margin-right:0.5rem;"></i>Ultra-fast tick execution</span>
-            <span><i class="fas fa-check-circle" style="color:var(--green);margin-right:0.5rem;"></i>Configurable tick triggers</span>
-            <span><i class="fas fa-check-circle" style="color:var(--green);margin-right:0.5rem;"></i>Auto stake progression</span>
+      <!-- STATUS BAR -->
+      <div class="sb-status-bar" id="sb-status-bar">
+        <div class="sb-status-indicator" id="sb-status-indicator">
+          <span class="sb-status-dot" id="sb-status-dot"></span>
+          <span class="sb-status-text" id="sb-status-text">STOPPED</span>
+        </div>
+        <div class="sb-live-info">
+          <span class="sb-live-item"><i class="fas fa-chart-line"></i> <span id="sb-live-price">---.---</span></span>
+          <span class="sb-live-item"><i class="fas fa-bolt"></i> Tick <span id="sb-tick-count">0</span> / <span id="sb-tick-target">5</span></span>
+          <span class="sb-live-item" id="sb-pnl-display" style="font-weight:700;">P&L: <span id="sb-pnl">0.00</span> USD</span>
+        </div>
+      </div>
+
+      <div class="sb-layout">
+        <!-- LEFT: CONFIG -->
+        <div class="sb-config-panel">
+          <div class="sb-section">
+            <div class="sb-section-title"><i class="fas fa-cog"></i> Bot Configuration</div>
+
+            <div class="sb-field">
+              <label>Market</label>
+              <select id="sb-market" onchange="sbUpdateMarket()">
+                <optgroup label="Volatility Indices">
+                  <option value="R_10">Volatility 10</option>
+                  <option value="R_25">Volatility 25</option>
+                  <option value="R_50" selected>Volatility 50</option>
+                  <option value="R_75">Volatility 75</option>
+                  <option value="R_100">Volatility 100</option>
+                  <option value="1HZ10V">Volatility 10 (1s)</option>
+                  <option value="1HZ25V">Volatility 25 (1s)</option>
+                  <option value="1HZ50V">Volatility 50 (1s)</option>
+                  <option value="1HZ75V">Volatility 75 (1s)</option>
+                  <option value="1HZ100V">Volatility 100 (1s)</option>
+                </optgroup>
+                <optgroup label="Boom & Crash">
+                  <option value="BOOM300N">Boom 300</option>
+                  <option value="BOOM500">Boom 500</option>
+                  <option value="BOOM1000">Boom 1000</option>
+                  <option value="CRASH300N">Crash 300</option>
+                  <option value="CRASH500">Crash 500</option>
+                  <option value="CRASH1000">Crash 1000</option>
+                </optgroup>
+                <optgroup label="Step Indices">
+                  <option value="stpRNG">Step Index</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="sb-field">
+              <label>Contract Type</label>
+              <select id="sb-contract-type" onchange="sbUpdateContractType()">
+                <option value="CALL">Rise</option>
+                <option value="PUT">Fall</option>
+                <option value="DIGITEVEN">Even</option>
+                <option value="DIGITODD">Odd</option>
+                <option value="DIGITOVER">Over</option>
+                <option value="DIGITUNDER">Under</option>
+              </select>
+            </div>
+
+            <div class="sb-field" id="sb-barrier-wrap" style="display:none;">
+              <label>Barrier (digit 0-9)</label>
+              <input type="number" id="sb-barrier" min="0" max="9" value="5">
+            </div>
+
+            <div class="sb-field">
+              <label>Duration</label>
+              <div style="display:flex;gap:0.5rem;">
+                <input type="number" id="sb-duration" min="1" max="10" value="1" style="flex:1;">
+                <select id="sb-duration-unit" style="flex:1;">
+                  <option value="t" selected>Ticks</option>
+                  <option value="s">Seconds</option>
+                  <option value="m">Minutes</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="sb-field">
+              <label>Stake (USD)</label>
+              <input type="number" id="sb-stake" min="0.35" step="0.01" value="0.35">
+            </div>
+
+            <div class="sb-field">
+              <label>Trade every N ticks</label>
+              <input type="number" id="sb-tick-interval" min="1" max="50" value="5">
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.25rem;">Bot waits this many ticks then fires a trade</div>
+            </div>
+          </div>
+
+          <div class="sb-section">
+            <div class="sb-section-title"><i class="fas fa-shield-alt"></i> Risk Management</div>
+
+            <div class="sb-field">
+              <label>Martingale on Loss</label>
+              <div class="sb-toggle-row">
+                <label class="sb-toggle">
+                  <input type="checkbox" id="sb-martingale">
+                  <span class="sb-toggle-slider"></span>
+                </label>
+                <span style="font-size:0.8rem;color:var(--text-muted);">Double stake on loss</span>
+              </div>
+            </div>
+
+            <div class="sb-field" id="sb-max-stake-wrap">
+              <label>Max Stake (USD)</label>
+              <input type="number" id="sb-max-stake" min="0.35" value="10.00" step="0.01">
+            </div>
+
+            <div class="sb-field">
+              <label>Take Profit (USD)</label>
+              <input type="number" id="sb-take-profit" min="0.01" step="0.01" value="5.00">
+            </div>
+
+            <div class="sb-field">
+              <label>Stop Loss (USD)</label>
+              <input type="number" id="sb-stop-loss" min="0.01" step="0.01" value="3.00">
+            </div>
+
+            <div class="sb-field">
+              <label>Max Trades</label>
+              <input type="number" id="sb-max-trades" min="1" value="50">
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.25rem;">Bot stops after this many trades</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:0.8rem;margin-top:0.5rem;">
+            <button class="sb-run-btn" id="sb-run-btn" onclick="startSpeedbot()">
+              <i class="fas fa-play"></i> START SPEEDBOT
+            </button>
+            <button class="sb-stop-btn" id="sb-stop-btn" onclick="stopSpeedbot()" disabled>
+              <i class="fas fa-stop"></i> STOP
+            </button>
+          </div>
+        </div>
+
+        <!-- RIGHT: STATS + LOG -->
+        <div class="sb-right-panel">
+          <div class="sb-section">
+            <div class="sb-section-title"><i class="fas fa-chart-bar"></i> Session Stats</div>
+            <div class="sb-stats-grid">
+              <div class="sb-stat-card">
+                <div class="sb-stat-label">Trades</div>
+                <div class="sb-stat-value" id="sb-stat-trades">0</div>
+              </div>
+              <div class="sb-stat-card">
+                <div class="sb-stat-label">Wins</div>
+                <div class="sb-stat-value green" id="sb-stat-wins">0</div>
+              </div>
+              <div class="sb-stat-card">
+                <div class="sb-stat-label">Losses</div>
+                <div class="sb-stat-value red" id="sb-stat-losses">0</div>
+              </div>
+              <div class="sb-stat-card">
+                <div class="sb-stat-label">Win Rate</div>
+                <div class="sb-stat-value" id="sb-stat-winrate">0%</div>
+              </div>
+              <div class="sb-stat-card">
+                <div class="sb-stat-label">Total Stake</div>
+                <div class="sb-stat-value" id="sb-stat-stake">0.00</div>
+              </div>
+              <div class="sb-stat-card">
+                <div class="sb-stat-label">Net P&L</div>
+                <div class="sb-stat-value" id="sb-stat-pnl">0.00</div>
+              </div>
+            </div>
+            <button onclick="sbResetStats()" style="margin-top:0.8rem;background:none;border:1px solid var(--border);border-radius:4px;padding:0.3rem 0.8rem;font-size:0.75rem;cursor:pointer;color:var(--text-muted);">
+              <i class="fas fa-redo"></i> Reset Stats
+            </button>
+          </div>
+
+          <div class="sb-section" style="flex:1;">
+            <div class="sb-section-title" style="justify-content:space-between;">
+              <span><i class="fas fa-list"></i> Trade Log</span>
+              <button onclick="sbClearLog()" style="background:none;border:none;font-size:0.75rem;color:var(--text-muted);cursor:pointer;">Clear</button>
+            </div>
+            <div class="sb-log" id="sb-log">
+              <div class="sb-log-empty">Bot not started. Configure and press START.</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1290,12 +1521,15 @@ function handleMessage(d) {
       break;
     case 'proposal':
       handleProposal(d.proposal);
+      if (sbState === 'PROPOSING') sbHandleProposal(d.proposal);
       break;
     case 'buy':
       handleBuy(d.buy);
+      if (sbState === 'BUYING') sbHandleBuy(d.buy);
       break;
     case 'proposal_open_contract':
       handleProposalOpenContract(d.proposal_open_contract);
+      sbHandleContract(d.proposal_open_contract);
       break;
     case 'sell':
       handleSell(d.sell);
@@ -1535,6 +1769,7 @@ function subscribeTicks(symbol) {
 }
 
 function handleTick(tick) {
+  sbOnTick(tick);
   if (!tick || !tick.quote) return;
   const sym = tick.symbol;
   const prev = tickHistory.get(sym);
@@ -3009,6 +3244,271 @@ document.addEventListener('DOMContentLoaded', () => {
     tokenInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') submitEntryToken(); });
   }
 });
+// ═══════════════════════════════════════════════════════
+// SPEEDBOT ENGINE
+// ═══════════════════════════════════════════════════════
+let sbRunning = false;
+let sbState = 'IDLE'; // IDLE | PROPOSING | BUYING | WAITING
+let sbTickCount = 0;
+let sbCurrentStake = 0.35;
+let sbBaseStake = 0.35;
+let sbActiveContractId = null;
+let sbCurrentProposalId = null;
+let sbStats = { trades: 0, wins: 0, losses: 0, pnl: 0, totalStake: 0 };
+
+function sbLog(msg, type = 'info') {
+  const log = document.getElementById('sb-log');
+  if (!log) return;
+  const empty = log.querySelector('.sb-log-empty');
+  if (empty) empty.remove();
+  const entry = document.createElement('div');
+  entry.className = 'sb-log-entry ' + type;
+  entry.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+  log.appendChild(entry);
+  log.scrollTop = log.scrollHeight;
+}
+
+function sbUpdateStatus(running) {
+  const dot = document.getElementById('sb-status-dot');
+  const txt = document.getElementById('sb-status-text');
+  if (!dot || !txt) return;
+  if (running) {
+    dot.className = 'sb-status-dot running';
+    txt.className = 'sb-status-text running';
+    txt.textContent = '⚡ RUNNING';
+  } else {
+    dot.className = 'sb-status-dot stopped';
+    txt.className = 'sb-status-text stopped';
+    txt.textContent = '■ STOPPED';
+  }
+}
+
+function sbUpdateStats() {
+  const s = sbStats;
+  const winRate = s.trades > 0 ? Math.round((s.wins / s.trades) * 100) : 0;
+  document.getElementById('sb-stat-trades').textContent = s.trades;
+  document.getElementById('sb-stat-wins').textContent = s.wins;
+  document.getElementById('sb-stat-losses').textContent = s.losses;
+  document.getElementById('sb-stat-winrate').textContent = winRate + '%';
+  document.getElementById('sb-stat-stake').textContent = s.totalStake.toFixed(2);
+  const pnlEl = document.getElementById('sb-stat-pnl');
+  pnlEl.textContent = (s.pnl >= 0 ? '+' : '') + s.pnl.toFixed(2);
+  pnlEl.className = 'sb-stat-value ' + (s.pnl >= 0 ? 'green' : 'red');
+  const pnlDisp = document.getElementById('sb-pnl');
+  if (pnlDisp) {
+    pnlDisp.textContent = (s.pnl >= 0 ? '+' : '') + s.pnl.toFixed(2);
+    pnlDisp.style.color = s.pnl >= 0 ? 'var(--green)' : 'var(--red)';
+  }
+}
+
+function sbResetStats() {
+  sbStats = { trades: 0, wins: 0, losses: 0, pnl: 0, totalStake: 0 };
+  sbUpdateStats();
+  sbLog('Stats reset.', 'info');
+}
+
+function sbClearLog() {
+  const log = document.getElementById('sb-log');
+  if (log) log.innerHTML = '<div class="sb-log-empty">Log cleared.</div>';
+}
+
+function sbUpdateMarket() {
+  const sym = document.getElementById('sb-market').value;
+  if (sbRunning) sendWS({ forget_all: 'ticks' });
+  sendWS({ ticks: sym, subscribe: 1 });
+  sbLog('Market switched to ' + sym, 'info');
+}
+
+function sbUpdateContractType() {
+  const ct = document.getElementById('sb-contract-type').value;
+  const barrierWrap = document.getElementById('sb-barrier-wrap');
+  if (barrierWrap) {
+    barrierWrap.style.display = (ct === 'DIGITOVER' || ct === 'DIGITUNDER') ? 'block' : 'none';
+  }
+}
+
+function startSpeedbot() {
+  if (!isLoggedIn && !isDemoMode) {
+    showNotif('Please connect your Deriv account first.');
+    return;
+  }
+  sbRunning = true;
+  sbState = 'IDLE';
+  sbTickCount = 0;
+  sbBaseStake = parseFloat(document.getElementById('sb-stake').value) || 0.35;
+  sbCurrentStake = sbBaseStake;
+  const target = parseInt(document.getElementById('sb-tick-interval').value) || 5;
+  document.getElementById('sb-tick-target').textContent = target;
+  document.getElementById('sb-tick-count').textContent = 0;
+  document.getElementById('sb-run-btn').disabled = true;
+  document.getElementById('sb-stop-btn').disabled = false;
+  sbUpdateStatus(true);
+  // Subscribe to ticks for selected market
+  const sym = document.getElementById('sb-market').value;
+  sendWS({ ticks: sym, subscribe: 1 });
+  sbLog('Speedbot started on ' + sym + '. Waiting for ticks...', 'info');
+  showNotif('⚡ Speedbot started!');
+}
+
+function stopSpeedbot() {
+  sbRunning = false;
+  sbState = 'IDLE';
+  sbTickCount = 0;
+  document.getElementById('sb-run-btn').disabled = false;
+  document.getElementById('sb-stop-btn').disabled = true;
+  sbUpdateStatus(false);
+  sbLog('Speedbot stopped. Session P&L: ' + (sbStats.pnl >= 0 ? '+' : '') + sbStats.pnl.toFixed(2) + ' USD', 'warn');
+  showNotif('Speedbot stopped.');
+}
+
+function sbOnTick(tick) {
+  if (!sbRunning) return;
+  // Update live price display
+  const priceEl = document.getElementById('sb-live-price');
+  if (priceEl) priceEl.textContent = parseFloat(tick.quote).toFixed(tick.pip_size || 2);
+  // Only fire trade if IDLE
+  if (sbState !== 'IDLE') return;
+  sbTickCount++;
+  document.getElementById('sb-tick-count').textContent = sbTickCount;
+  const target = parseInt(document.getElementById('sb-tick-interval').value) || 5;
+  document.getElementById('sb-tick-target').textContent = target;
+  if (sbTickCount >= target) {
+    sbTickCount = 0;
+    document.getElementById('sb-tick-count').textContent = 0;
+    sbFireTrade();
+  }
+}
+
+function sbFireTrade() {
+  if (!sbRunning || sbState !== 'IDLE') return;
+  // Check max trades
+  const maxTrades = parseInt(document.getElementById('sb-max-trades').value) || 50;
+  if (sbStats.trades >= maxTrades) {
+    sbLog('Max trades (' + maxTrades + ') reached. Stopping.', 'warn');
+    stopSpeedbot();
+    return;
+  }
+  const ct = document.getElementById('sb-contract-type').value;
+  const sym = document.getElementById('sb-market').value;
+  const dur = parseInt(document.getElementById('sb-duration').value) || 1;
+  const durUnit = document.getElementById('sb-duration-unit').value;
+  const barrier = document.getElementById('sb-barrier').value;
+  if (isDemoMode) {
+    sbExecuteDemo(ct, sym, dur, durUnit);
+    return;
+  }
+  const req = {
+    proposal: 1,
+    amount: sbCurrentStake,
+    basis: 'stake',
+    contract_type: ct,
+    currency: accountData.currency || 'USD',
+    duration: dur,
+    duration_unit: durUnit,
+    symbol: sym
+  };
+  if ((ct === 'DIGITOVER' || ct === 'DIGITUNDER') && barrier !== '') req.barrier = barrier;
+  sbState = 'PROPOSING';
+  sbLog('Requesting proposal: ' + ct + ' @ ' + sbCurrentStake.toFixed(2) + ' USD', 'info');
+  sendWS(req);
+}
+
+function sbExecuteDemo(ct, sym, dur, durUnit) {
+  sbState = 'BUYING';
+  sbStats.trades++;
+  sbStats.totalStake += sbCurrentStake;
+  const isWin = Math.random() > 0.45;
+  const profit = isWin ? sbCurrentStake * 0.95 : -sbCurrentStake;
+  sbStats.pnl += profit;
+  if (isWin) {
+    sbStats.wins++;
+    sbLog('DEMO WIN +' + profit.toFixed(2) + ' USD (' + ct + ' ' + sym + ')', 'win');
+    sbCurrentStake = parseFloat(document.getElementById('sb-stake').value) || 0.35;
+  } else {
+    sbStats.losses++;
+    sbLog('DEMO LOSS -' + Math.abs(profit).toFixed(2) + ' USD (' + ct + ' ' + sym + ')', 'loss');
+    const useMart = document.getElementById('sb-martingale').checked;
+    if (useMart) {
+      const maxStake = parseFloat(document.getElementById('sb-max-stake').value) || 10;
+      sbCurrentStake = Math.min(sbCurrentStake * 2, maxStake);
+      sbLog('Martingale: next stake = ' + sbCurrentStake.toFixed(2) + ' USD', 'warn');
+    }
+  }
+  sbUpdateStats();
+  sbCheckLimits();
+  sbState = 'IDLE';
+}
+
+function sbHandleProposal(proposal) {
+  if (sbState !== 'PROPOSING') return;
+  if (!proposal || !proposal.id) {
+    sbLog('Proposal error — retrying.', 'warn');
+    sbState = 'IDLE';
+    return;
+  }
+  sbCurrentProposalId = proposal.id;
+  sbState = 'BUYING';
+  sendWS({ buy: proposal.id, price: proposal.ask_price });
+}
+
+function sbHandleBuy(buy) {
+  if (sbState !== 'BUYING') return;
+  if (!buy || !buy.contract_id) {
+    sbLog('Buy failed.', 'warn');
+    sbState = 'IDLE';
+    return;
+  }
+  sbActiveContractId = buy.contract_id;
+  sbStats.trades++;
+  sbStats.totalStake += sbCurrentStake;
+  sbLog('BUY: ' + buy.shortcode + ' | Contract #' + buy.contract_id, 'buy');
+  sbUpdateStats();
+  sendWS({ proposal_open_contract: 1, contract_id: buy.contract_id, subscribe: 1 });
+  sbState = 'WAITING';
+}
+
+function sbHandleContract(poc) {
+  if (!poc || poc.contract_id !== sbActiveContractId) return;
+  if (poc.is_expired || poc.is_sold) {
+    const profit = parseFloat(poc.profit || 0);
+    sbStats.pnl += profit;
+    if (profit >= 0) {
+      sbStats.wins++;
+      sbLog('WIN +' + profit.toFixed(2) + ' USD', 'win');
+      sbCurrentStake = sbBaseStake;
+    } else {
+      sbStats.losses++;
+      sbLog('LOSS ' + profit.toFixed(2) + ' USD', 'loss');
+      const useMart = document.getElementById('sb-martingale').checked;
+      if (useMart) {
+        const maxStake = parseFloat(document.getElementById('sb-max-stake').value) || 10;
+        sbCurrentStake = Math.min(sbCurrentStake * 2, maxStake);
+        sbLog('Martingale: next stake = ' + sbCurrentStake.toFixed(2) + ' USD', 'warn');
+      }
+    }
+    sbUpdateStats();
+    sbCheckLimits();
+    sbActiveContractId = null;
+    sbState = 'IDLE';
+  }
+}
+
+function sbCheckLimits() {
+  const tp = parseFloat(document.getElementById('sb-take-profit').value) || 5;
+  const sl = parseFloat(document.getElementById('sb-stop-loss').value) || 3;
+  if (sbStats.pnl >= tp) {
+    sbLog('🎯 Take profit reached! +' + sbStats.pnl.toFixed(2) + ' USD. Stopping.', 'win');
+    stopSpeedbot();
+    showNotif('🎯 Take Profit reached! Speedbot stopped.');
+    return;
+  }
+  if (sbStats.pnl <= -sl) {
+    sbLog('🛑 Stop loss hit! ' + sbStats.pnl.toFixed(2) + ' USD. Stopping.', 'loss');
+    stopSpeedbot();
+    showNotif('🛑 Stop Loss hit! Speedbot stopped.');
+  }
+}
+
 </script>
 </body>
 </html>
