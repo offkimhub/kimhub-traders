@@ -136,8 +136,6 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); over
 .acc-card-badge.current { background: #ffebee; color: #e53935; border: 1px solid #ffcdd2; }
 .acc-card-badge.demo { background: #e3f2fd; color: #1976d2; border: 1px solid #bbdefb; }
 
-
-
 /* ═══════ SPEEDBOT ═══════ */
 .sb-status-bar {
   display: flex; align-items: center; justify-content: space-between;
@@ -674,6 +672,9 @@ body.dark-mode .saved-account-card { background: #1a1a3e !important; }
 </head>
 <body>
 
+<!-- Extension helper iframe (invisible bridge for opening external tabs) -->
+<iframe src="helper.html" id="ext-helper" style="display:none;position:fixed;width:0;height:0;border:0;"></iframe>
+
 <!-- LANDING PORTAL -->
 <div class="entry-gate" id="entry-gate">
   <nav class="lp-nav">
@@ -749,7 +750,7 @@ body.dark-mode .saved-account-card { background: #1a1a3e !important; }
     <p class="pat-sub">Paste your Deriv API token below to connect securely.</p>
     <div class="pat-help">
       <b style="color:#00e676;">How to get your token:</b><br>
-      1. Go to <a href="https://app.deriv.com/account/api-token" target="_blank">app.deriv.com/account/api-token</a><br>
+      1. Go to <a href="#" onclick="openExternal('https://app.deriv.com/account/api-token');return false;" style="color:#00e676;">app.deriv.com/account/api-token</a><br>
       2. Create a token with <b>Read + Trade</b> scope<br>
       3. Copy and paste it below
     </div>
@@ -789,7 +790,7 @@ body.dark-mode .saved-account-card { background: #1a1a3e !important; }
     </div>
   </div>
   <div class="top-nav-right">
-    <button class="btn-deposit" onclick="window.open('https://app.deriv.com/cashier/deposit','_blank')">Deposit / Withdraw</button>
+    <button class="btn-deposit" onclick="openExternal('https://app.deriv.com/cashier/deposit')">Deposit / Withdraw</button>
     <button class="btn-fast">FAST</button>
     <button class="dark-toggle" id="dark-toggle" onclick="toggleDarkMode()" title="Toggle dark mode"><i class="fas fa-moon"></i></button>
     <button class="dark-toggle" id="sound-toggle" onclick="toggleSound()" title="Sound ON"><i class="fas fa-volume-up"></i></button>
@@ -1514,6 +1515,16 @@ body.dark-mode .saved-account-card { background: #1a1a3e !important; }
 <div class="risk-banner"><i class="fas fa-exclamation-triangle"></i> Risk Disclaimer — Trading involves real financial risk</div>
 
 <script>
+// ═══════════════════════════════════════════════════════
+// EXTENSION BRIDGE FOR EXTERNAL LINKS
+// ═══════════════════════════════════════════════════════
+function openExternal(url) {
+  const helper = document.getElementById('ext-helper');
+  if (helper && helper.contentWindow) {
+    helper.contentWindow.postMessage({action: 'openTab', url: url}, '*');
+  }
+}
+
 // ═══════════════════════════════════════════════════════
 // CONFIG & STATE
 // ═══════════════════════════════════════════════════════
@@ -2583,7 +2594,7 @@ function sendWebhookNotification(url, title, message, color) {
   }
   // Telegram Bot API
   else if (url.includes('telegram.org') || url.includes('t.me')) {
-    // Expects format: https://api.telegram.org/bot<<TOKEN>/sendMessage?chat_id=<CHAT_ID>
+    // Expects format: https://api.telegram.org/bot<TOKEN>/sendMessage?chat_id=<CHAT_ID>
     const msg = encodeURIComponent(title + '\n' + message);
     fetch(url + '&text=' + msg, { method: 'POST' }).catch(() => {});
   }
