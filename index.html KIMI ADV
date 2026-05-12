@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KimHubTraders | Live Deriv Trading</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&family=Exo+2:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 :root {
@@ -492,34 +493,73 @@ body.dark-mode .sb-status-bar { background: #16213e; }
 }
 .kimhub-bot-run:hover { background: #0a3d7a; transform: translateY(-1px); }
 
-/* ═══════ ENTRY GATE ═══════ */
+/* ═══════ LANDING PORTAL (Dark Green KimHub Theme) ═══════ */
 .entry-gate {
   position: fixed; inset: 0;
-  background: linear-gradient(135deg, #0e4c92 0%, #00a79e 100%);
+  background: #050d05;
   z-index: 99999; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; padding: 2rem;
+  overflow-y: auto;
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .entry-gate.hidden { opacity: 0; pointer-events: none; transform: scale(1.02); }
-.entry-gate-box {
-  background: var(--surface); border-radius: 16px; padding: 2.5rem;
-  max-width: 440px; width: 100%; box-shadow: 0 24px 64px rgba(0,0,0,0.25); text-align: center;
+.lp-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2rem; border-bottom: 1px solid #1a3a1a; background: #091509;
+  flex-shrink: 0;
 }
-.entry-gate-logo { display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin-bottom: 0.5rem; }
-.entry-gate-logo-icon { width: 48px; height: 48px; background: linear-gradient(135deg, var(--green), var(--green-dark)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.4rem; }
-.entry-gate-logo-text { font-size: 1.6rem; font-weight: 700; }
-.entry-gate-logo-text span { color: var(--green); }
-.entry-gate-subtitle { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 2rem; }
-.entry-gate-input-wrap { position: relative; margin-bottom: 1rem; }
-.entry-gate-input { width: 100%; padding: 0.9rem 1rem 0.9rem 2.8rem; border: 2px solid var(--border); border-radius: 8px; font-size: 0.9rem; outline: none; transition: all 0.2s; font-family: var(--font-mono); letter-spacing: 0.5px; }
-.entry-gate-input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(0,167,158,0.15); }
-.entry-gate-input-wrap i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem; }
-.entry-gate-btn { width: 100%; background: var(--green); color: #fff; border: none; padding: 0.9rem; border-radius: 8px; font-family: var(--font); font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-.entry-gate-btn:hover { background: var(--green-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,167,158,0.3); }
-.entry-gate-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-.entry-gate-help { background: var(--bg); border: 1px solid var(--border-light); border-radius: 8px; padding: 1rem; font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; margin-top: 1.2rem; text-align: left; }
-.entry-gate-help a { color: var(--green); font-weight: 600; }
-.entry-gate-error { color: var(--red); font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2rem; font-weight: 600; }
+.lp-logo { font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 2px; }
+.lp-logo .k { color: #00e676; }
+.lp-logo .hub { color: #c8e6c9; }
+.lp-logo .trades { color: #ff6b35; }
+.lp-links { display: flex; gap: 1.5rem; }
+.lp-links a { color: #4a7a4a; font-size: 0.9rem; font-family: 'Exo 2', sans-serif; font-weight: 500; transition: color 0.2s; text-decoration: none; }
+.lp-links a:hover { color: #00e676; }
+.lp-btn-connect { background: #00e676; color: #000; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.95rem; letter-spacing: 1px; border: none; padding: 0.6rem 1.4rem; border-radius: 4px; cursor: pointer; transition: background 0.2s, transform 0.1s; }
+.lp-btn-connect:hover { background: #00c853; transform: translateY(-1px); }
+.lp-hero { text-align: center; padding: 5rem 2rem 4rem; }
+.lp-hero-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: #004d20; color: #00e676; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 2px; padding: 0.3rem 0.9rem; border-radius: 20px; border: 1px solid #00c853; margin-bottom: 1.5rem; }
+.lp-hero-badge i { font-size: 0.6rem; }
+.lp-hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; letter-spacing: 3px; line-height: 1; margin-bottom: 1rem; }
+.lp-hero h1 .line1 { color: #c8e6c9; }
+.lp-hero h1 .line2 { color: #00e676; }
+.lp-hero p { font-size: 1.05rem; color: #4a7a4a; max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.6; font-weight: 300; font-family: 'Exo 2', sans-serif; }
+.lp-hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.lp-btn-primary { background: #00e676; color: #000; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 1px; border: none; padding: 0.8rem 2rem; border-radius: 4px; cursor: pointer; transition: background 0.2s, transform 0.1s; display: inline-flex; align-items: center; gap: 0.5rem; }
+.lp-btn-primary:hover { background: #00c853; transform: translateY(-2px); }
+.lp-btn-outline { background: transparent; color: #00e676; font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 1rem; letter-spacing: 1px; border: 1px solid #00c853; padding: 0.8rem 2rem; border-radius: 4px; cursor: pointer; transition: background 0.2s, transform 0.1s; display: inline-flex; align-items: center; gap: 0.5rem; }
+.lp-btn-outline:hover { background: #004d20; transform: translateY(-2px); }
+.lp-stats { display: flex; justify-content: center; gap: 3rem; padding: 2rem; flex-wrap: wrap; background: #091509; border-top: 1px solid #1a3a1a; border-bottom: 1px solid #1a3a1a; }
+.lp-stat { text-align: center; }
+.lp-stat-num { font-family: 'Rajdhani', sans-serif; font-size: 2rem; font-weight: 700; color: #00e676; }
+.lp-stat-lbl { font-size: 0.75rem; color: #4a7a4a; letter-spacing: 1px; font-family: 'DM Mono', monospace; }
+.lp-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; padding: 3rem 2rem; max-width: 1100px; margin: 0 auto; width: 100%; }
+.lp-feature { background: #0d1f0d; border: 1px solid #1a3a1a; border-radius: 8px; padding: 1.5rem; transition: border-color 0.2s, transform 0.2s; }
+.lp-feature:hover { border-color: #00c853; transform: translateY(-3px); }
+.lp-feature-icon { width: 48px; height: 48px; background: #004d20; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+.lp-feature-icon i { color: #00e676; font-size: 1.3rem; }
+.lp-feature h3 { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 600; color: #69f0ae; margin-bottom: 0.5rem; }
+.lp-feature p { font-size: 0.85rem; color: #4a7a4a; line-height: 1.5; font-family: 'Exo 2', sans-serif; }
+.lp-footer { text-align: center; padding: 1.5rem; color: #4a7a4a; font-size: 0.75rem; font-family: 'DM Mono', monospace; border-top: 1px solid #1a3a1a; margin-top: auto; }
+
+/* ═══════ LOGIN MODAL (Dark Green) ═══════ */
+.pat-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 99998; align-items: center; justify-content: center; }
+.pat-modal.active { display: flex; }
+.pat-box { background: #0d1f0d; border: 1px solid #00c853; border-radius: 10px; padding: 2rem; max-width: 460px; width: 90%; position: relative; }
+.pat-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #4a7a4a; font-size: 1.2rem; cursor: pointer; }
+.pat-close:hover { color: #00e676; }
+.pat-title { font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; font-weight: 700; color: #69f0ae; margin-bottom: 0.3rem; }
+.pat-sub { font-size: 0.8rem; color: #4a7a4a; font-family: 'DM Mono', monospace; margin-bottom: 1.5rem; }
+.pat-help { background: #091509; border: 1px solid #1a3a1a; border-radius: 6px; padding: 1rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: #81c784; font-family: 'DM Mono', monospace; line-height: 1.6; }
+.pat-help a { color: #00e676; font-weight: 600; }
+.pat-input { width: 100%; background: #091509; border: 1px solid #224422; color: #c8e6c9; font-family: 'DM Mono', monospace; font-size: 0.85rem; padding: 0.7rem 1rem; border-radius: 4px; outline: none; margin-bottom: 0.5rem; transition: border-color 0.2s; }
+.pat-input:focus { border-color: #00e676; }
+.pat-btn { width: 100%; background: #00e676; color: #000; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 1px; border: none; padding: 0.7rem; border-radius: 4px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.5rem; }
+.pat-btn:hover { background: #00c853; }
+.pat-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.pat-btn-secondary { width: 100%; background: #0e4c92; color: #fff; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 1px; border: none; padding: 0.7rem; border-radius: 4px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.6rem; }
+.pat-btn-secondary:hover { background: #0a3d7a; }
+.pat-footer { font-size: 0.7rem; color: #4a7a4a; font-family: 'DM Mono', monospace; margin-top: 0.8rem; text-align: center; }
+.entry-gate-error { color: #ff5252; font-size: 0.8rem; margin-bottom: 0.8rem; min-height: 1.2rem; font-weight: 600; }
 .entry-gate-spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -561,6 +601,9 @@ body.dark-mode .sb-status-bar { background: #16213e; }
   .builder-container { flex-direction: column; }
   .builder-left, .builder-right { width: 100%; height: auto; max-height: 300px; }
   .kimhub-bots-grid, .live-prices-grid { grid-template-columns: 1fr; }
+  .lp-features { grid-template-columns: 1fr; }
+  .lp-stats { gap: 1.5rem; }
+  .lp-hero h1 { font-size: 2.2rem; }
 }
 
 /* ═══════ DARK MODE ═══════ */
@@ -631,37 +674,100 @@ body.dark-mode .saved-account-card { background: #1a1a3e !important; }
 </head>
 <body>
 
-<!-- ENTRY LOGIN GATE -->
+<!-- LANDING PORTAL -->
 <div class="entry-gate" id="entry-gate">
-  <div class="entry-gate-box">
-    <div class="entry-gate-logo">
-      <div class="entry-gate-logo-icon"><i class="fas fa-chart-line"></i></div>
-      <div class="entry-gate-logo-text">KimHub<span>Traders</span></div>
+  <nav class="lp-nav">
+    <div class="lp-logo"><span class="k">KIM</span><span class="hub">HUB</span><span class="trades">TRADERS</span></div>
+    <div class="lp-links">
+      <a href="#">Features</a>
+      <a href="#">Bots</a>
+      <a href="#">Copy Trade</a>
     </div>
-    <p class="entry-gate-subtitle">Connect your Deriv account to start live trading</p>
-    <div class="entry-gate-input-wrap">
-      <i class="fas fa-key"></i>
-      <input type="password" class="entry-gate-input" id="entry-token" placeholder="Enter your Deriv API token...">
+    <button class="lp-btn-connect" onclick="showLoginModal()"><i class="fas fa-link"></i> &nbsp;Connect Deriv</button>
+  </nav>
+
+  <div class="lp-hero">
+    <div class="lp-hero-badge"><i class="fas fa-circle"></i> LIVE TRADING HUB</div>
+    <h1><div class="line1">TRADE SMARTER</div><div class="line2">WITH KIMHUB</div></h1>
+    <p>Kenya's premier Deriv-powered trading hub. Access proven bots, copy elite traders, and watch live markets — all in one platform.</p>
+    <div class="lp-hero-btns">
+      <button class="lp-btn-primary" onclick="showLoginModal()"><i class="fas fa-sign-in-alt"></i> &nbsp;Connect Account</button>
+      <button class="lp-btn-outline" onclick="enterDemoMode()"><i class="fas fa-eye"></i> &nbsp;Preview Demo</button>
     </div>
+  </div>
+
+  <div class="lp-stats">
+    <div class="lp-stat"><div class="lp-stat-num">2,500+</div><div class="lp-stat-lbl">Active Traders</div></div>
+    <div class="lp-stat"><div class="lp-stat-num">12</div><div class="lp-stat-lbl">Trading Bots</div></div>
+    <div class="lp-stat"><div class="lp-stat-num">24/7</div><div class="lp-stat-lbl">Live Markets</div></div>
+    <div class="lp-stat"><div class="lp-stat-num">$0</div><div class="lp-stat-lbl">Platform Fee</div></div>
+  </div>
+
+  <div class="lp-features">
+    <div class="lp-feature">
+      <div class="lp-feature-icon"><i class="fas fa-chart-line"></i></div>
+      <h3>Live Market Prices</h3>
+      <p>Real-time price feeds for Volatility Indices, Forex pairs, Gold, and Crypto — powered directly by Deriv's market engine.</p>
+    </div>
+    <div class="lp-feature">
+      <div class="lp-feature-icon"><i class="fas fa-robot"></i></div>
+      <h3>KimHub Trading Bots</h3>
+      <p>Download battle-tested bots for Deriv's synthetic indices. Built and optimized by our trading team. Import directly into DBot.</p>
+    </div>
+    <div class="lp-feature">
+      <div class="lp-feature-icon"><i class="fas fa-users"></i></div>
+      <h3>Copy Elite Traders</h3>
+      <p>Follow and copy KimHub's top-performing traders automatically. Your trades mirror theirs in real time with your own capital.</p>
+    </div>
+    <div class="lp-feature">
+      <div class="lp-feature-icon"><i class="fas fa-shield-alt"></i></div>
+      <h3>Your Funds Stay Safe</h3>
+      <p>We never touch your money. KimHub connects to your own Deriv account securely via OAuth — you stay in full control.</p>
+    </div>
+    <div class="lp-feature">
+      <div class="lp-feature-icon"><i class="fas fa-mobile-alt"></i></div>
+      <h3>Trade Anywhere</h3>
+      <p>Fully mobile-responsive. Access your dashboard, bots, and copied trades from any device, any time, anywhere in Kenya.</p>
+    </div>
+    <div class="lp-feature">
+      <div class="lp-feature-icon"><i class="fas fa-graduation-cap"></i></div>
+      <h3>Trading Education</h3>
+      <p>Free strategy guides, video tutorials, and market analysis — everything you need to grow from beginner to profitable trader.</p>
+    </div>
+  </div>
+
+  <div class="lp-footer">
+    KimHub Traders is an independent third-party platform. Powered by Deriv API. &nbsp;|&nbsp; Trading involves risk. &nbsp;|&nbsp; &copy; 2026 KimHub Traders
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="pat-modal" id="pat-modal">
+  <div class="pat-box">
+    <button class="pat-close" onclick="hideLoginModal()"><i class="fas fa-times"></i></button>
+    <div class="pat-title">Connect Deriv Account</div>
+    <p class="pat-sub">Paste your Deriv API token below to connect securely.</p>
+    <div class="pat-help">
+      <b style="color:#00e676;">How to get your token:</b><br>
+      1. Go to <a href="https://app.deriv.com/account/api-token" target="_blank">app.deriv.com/account/api-token</a><br>
+      2. Create a token with <b>Read + Trade</b> scope<br>
+      3. Copy and paste it below
+    </div>
+    <input type="password" class="pat-input" id="entry-token" placeholder="Enter your Deriv API token...">
     <div class="entry-gate-error" id="entry-error"></div>
-    <button class="entry-gate-btn" id="entry-btn" onclick="submitEntryToken()">
+    <button class="pat-btn" id="entry-btn" onclick="submitEntryToken()">
       <span class="entry-gate-spinner" id="entry-spinner"></span>
       <span id="entry-btn-text">Connect Account</span>
       <i class="fas fa-arrow-right" id="entry-btn-icon"></i>
     </button>
-    <button class="entry-gate-btn" style="margin-top:0.6rem;background:var(--blue);" onclick="enterDemoMode()">
+    <button class="pat-btn-secondary" onclick="enterDemoMode()">
       <i class="fas fa-vial"></i> Continue in Demo Mode
     </button>
     <div id="saved-accounts" style="margin-top:1rem;text-align:left;display:none;">
-      <div style="font-size:0.7rem;color:var(--text-muted);font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;margin-bottom:0.5rem;">Saved Accounts</div>
+      <div style="font-size:0.7rem;color:#4a7a4a;font-family:'DM Mono',monospace;letter-spacing:1px;text-transform:uppercase;margin-bottom:0.5rem;">Saved Accounts</div>
       <div id="saved-accounts-list"></div>
     </div>
-    <div class="entry-gate-help">
-      <b style="color:var(--green);">How to get your API token:</b><br>
-      1. Go to <a href="https://app.deriv.com/account/api-token" target="_blank">app.deriv.com/account/api-token</a><br>
-      2. Create a token with <b>Read + Trade</b> scope<br>
-      3. Copy and paste it above
-    </div>
+    <p class="pat-footer">Your token connects directly to Deriv's WebSocket API. We do not store it on any server.</p>
   </div>
 </div>
 
@@ -1598,7 +1704,6 @@ function updateUI() {
   document.getElementById('acc-badge').textContent = isDemoMode ? 'Demo' : (accountData.is_virtual ? 'Demo' : 'Real');
   document.getElementById('acc-badge').className = 'balance-badge ' + ((isDemoMode || accountData.is_virtual) ? 'demo' : 'real');
   document.getElementById('user-avatar').textContent = (accountData.name || 'T').substring(0,1).toUpperCase();
-  document.getElementById('builder-currency-label').textContent = accountData.currency || 'USD';
 }
 
 function buildAccDropdown() {
@@ -1666,8 +1771,19 @@ function logout() {
 }
 
 // ═══════════════════════════════════════════════════════
-// ENTRY GATE
+// LANDING PORTAL & LOGIN MODAL
 // ═══════════════════════════════════════════════════════
+function showLoginModal() {
+  document.getElementById('pat-modal').classList.add('active');
+  document.getElementById('entry-error').textContent = '';
+  setTimeout(() => document.getElementById('entry-token').focus(), 100);
+}
+
+function hideLoginModal() {
+  document.getElementById('pat-modal').classList.remove('active');
+  document.getElementById('entry-error').textContent = '';
+}
+
 function getSavedAccounts() {
   try { return JSON.parse(localStorage.getItem('kht_accounts') || '[]'); } catch(e) { return []; }
 }
@@ -1692,15 +1808,15 @@ function renderSavedAccounts() {
   if (accounts.length === 0) { container.style.display = 'none'; return; }
   container.style.display = 'block';
   list.innerHTML = accounts.map(a => `
-    <div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg);border:1px solid var(--border-light);border-radius:6px;padding:0.5rem 0.7rem;margin-bottom:0.4rem;cursor:pointer;transition:all 0.15s;" onclick="connectWithToken('${a.token}')" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--border-light)'">
+    <div style="display:flex;align-items:center;justify-content:space-between;background:#091509;border:1px solid #1a3a1a;border-radius:6px;padding:0.5rem 0.7rem;margin-bottom:0.4rem;cursor:pointer;transition:all 0.15s;" onclick="connectWithToken('${a.token}')" onmouseover="this.style.borderColor='#00c853'" onmouseout="this.style.borderColor='#1a3a1a'">
       <div style="display:flex;align-items:center;gap:0.5rem;">
-        <div style="width:28px;height:28px;border-radius:50%;background:${a.isVirtual?'linear-gradient(135deg,#ff6b35,#ff8c5a)':'linear-gradient(135deg,var(--green),var(--green-dark))'};display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;font-weight:700;">${a.name ? a.name.substring(0,1).toUpperCase() : 'A'}</div>
+        <div style="width:28px;height:28px;border-radius:50%;background:${a.isVirtual?'linear-gradient(135deg,#ff6b35,#ff8c5a)':'linear-gradient(135deg,#00e676,#00c853)'};display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;font-weight:700;">${a.name ? a.name.substring(0,1).toUpperCase() : 'A'}</div>
         <div>
-          <div style="font-size:0.78rem;font-weight:600;">${a.name || 'Account'}</div>
-          <div style="font-size:0.65rem;color:var(--text-muted);font-family:var(--font-mono);">${a.loginid || 'Unknown'} ${a.isVirtual ? '<span style="color:var(--blue)">• Demo</span>' : '<span style="color:var(--green)">• Real</span>'}</div>
+          <div style="font-size:0.78rem;font-weight:600;color:#c8e6c9;">${a.name || 'Account'}</div>
+          <div style="font-size:0.65rem;color:#4a7a4a;font-family:'DM Mono',monospace;">${a.loginid || 'Unknown'} ${a.isVirtual ? '<span style="color:#81c784">• Demo</span>' : '<span style="color:#00e676">• Real</span>'}</div>
         </div>
       </div>
-      <button onclick="event.stopPropagation();deleteSavedAccount('${a.token}')" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:0.8rem;padding:0.2rem;" title="Remove"><i class="fas fa-times"></i></button>
+      <button onclick="event.stopPropagation();deleteSavedAccount('${a.token}')" style="background:none;border:none;color:#4a7a4a;cursor:pointer;font-size:0.8rem;padding:0.2rem;" title="Remove"><i class="fas fa-times"></i></button>
     </div>
   `).join('');
 }
@@ -1717,6 +1833,7 @@ function enterDemoMode() {
   updateUI();
   buildAccDropdown();
   document.getElementById('entry-gate').classList.add('hidden');
+  document.getElementById('pat-modal').classList.remove('active');
   subscribeAllPrices();
   changeChartSymbol();
   logJournal('SYSTEM', 'Demo mode active. Trades are SIMULATED.');
@@ -1751,6 +1868,7 @@ function submitEntryToken() {
       errorEl.textContent = 'Connection timeout. Try Demo Mode.';
     } else {
       document.getElementById('entry-gate').classList.add('hidden');
+      document.getElementById('pat-modal').classList.remove('active');
     }
   }, 5000);
 }
@@ -2465,7 +2583,7 @@ function sendWebhookNotification(url, title, message, color) {
   }
   // Telegram Bot API
   else if (url.includes('telegram.org') || url.includes('t.me')) {
-    // Expects format: https://api.telegram.org/bot<TOKEN>/sendMessage?chat_id=<CHAT_ID>
+    // Expects format: https://api.telegram.org/bot<<TOKEN>/sendMessage?chat_id=<CHAT_ID>
     const msg = encodeURIComponent(title + '\n' + message);
     fetch(url + '&text=' + msg, { method: 'POST' }).catch(() => {});
   }
