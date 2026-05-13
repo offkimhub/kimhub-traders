@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KimHubTraders | Live Deriv Trading</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   ROOT THEME — Light dbtraders/Deriv Hub style
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --bg: #f2f3f5;
+  --surface: #ffffff;
+  --border: #d6d9dc;
+  --border-light: #e8eaed;
+  --text: #1a1a2e;
+  --text-secondary: #5f6368;
+  --text-muted: #80868b;
+  --green: #00a79e;
+  --green-dark: #00847d;
+  --green-light: #e6f5f4;
+  --red: #ff444f;
+  --red-light: #ffe6e8;
+  --blue: #0e4c92;
+  --blue-light: #e8f0f8;
+  --orange: #ff8c00;
+  --yellow: #ffc107;
+  --purple: #7b1fa2;
+  --font: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius: 10px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LANDING PORTAL (PRESERVED — Dark Green KimHub Theme)
+   ═══════════════════════════════════════════════════════════════ */
+.entry-gate {
+  position: fixed; inset: 0;
+  background: #050d05;
+  z-index: 99999; display: flex; flex-direction: column;
+  overflow-y: auto;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.entry-gate.hidden { opacity: 0; pointer-events: none; transform: scale(1.02); }
+.lp-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2rem; border-bottom: 1px solid #1a3a1a; background: #091509;
+  flex-shrink: 0;
+}
+.lp-logo { font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 2px; }
+.lp-logo .k { color: #00e676; }
+.lp-logo .hub { color: #c8e6c9; }
+.lp-logo .trades { color: #ff6b35; }
+.lp-links { display: flex; gap: 1.5rem; }
+.lp-links a { color: #4a7a4a; font-size: 0.9rem; font-family: 'Exo 2', sans-serif; font-weight: 500; transition: color 0.2s; text-decoration: none; }
+.lp-links a:hover { color: #00e676; }
+.lp-btn-connect { background: #00e676; color: #000; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.95rem; letter-spacing: 1px; border: none; padding: 0.6rem 1.4rem; border-radius: 4px; cursor: pointer; transition: background 0.2s, transform 0.1s; }
+.lp-btn-connect:hover { background: #00c853; transform: translateY(-1px); }
+.lp-hero { text-align: center; padding: 5rem 2rem 4rem; }
+.lp-hero-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: #004d20; color: #00e676; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 2px; padding: 0.3rem 0.9rem; border-radius: 20px; border: 1px solid #00c853; margin-bottom: 1.5rem; }
+.lp-hero h1 { font-family: 'Rajdhani', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; letter-spacing: 3px; line-height: 1; margin-bottom: 1rem; }
+.lp-hero h1 .line1 { color: #c8e6c9; }
+.lp-hero h1 .line2 { color: #00e676; }
+.lp-hero p { font-size: 1.05rem; color: #4a7a4a; max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.6; font-weight: 300; font-family: 'Exo 2', sans-serif; }
+.lp-hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.lp-btn-primary { background: #00e676; color: #000; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 1px; border: none; padding: 0.8rem 2rem; border-radius: 4px; cursor: pointer; transition: background 0.2s, transform 0.1s; display: inline-flex; align-items: center; gap: 0.5rem; }
+.lp-btn-primary:hover { background: #00c853; transform: translateY(-2px); }
+.lp-btn-outline { background: transparent; color: #00e676; font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 1rem; letter-spacing: 1px; border: 1px solid #00c853; padding: 0.8rem 2rem; border-radius: 4px; cursor: pointer; transition: background 0.2s, transform 0.1s; display: inline-flex; align-items: center; gap: 0.5rem; }
+.lp-btn-outline:hover { background: #004d20; transform: translateY(-2px); }
+.lp-stats { display: flex; justify-content: center; gap: 3rem; padding: 2rem; flex-wrap: wrap; background: #091509; border-top: 1px solid #1a3a1a; border-bottom: 1px solid #1a3a1a; }
+.lp-stat { text-align: center; }
+.lp-stat-num { font-family: 'Rajdhani', sans-serif; font-size: 2rem; font-weight: 700; color: #00e676; }
+.lp-stat-lbl { font-size: 0.75rem; color: #4a7a4a; letter-spacing: 1px; font-family: 'DM Mono', monospace; }
+.lp-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; padding: 3rem 2rem; max-width: 1100px; margin: 0 auto; width: 100%; }
+.lp-feature { background: #0d1f0d; border: 1px solid #1a3a1a; border-radius: 8px; padding: 1.5rem; transition: border-color 0.2s, transform 0.2s; }
+.lp-feature:hover { border-color: #00c853; transform: translateY(-3px); }
+.lp-feature-icon { width: 48px; height: 48px; background: #004d20; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+.lp-feature-icon i { color: #00e676; font-size: 1.3rem; }
+.lp-feature h3 { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 600; color: #69f0ae; margin-bottom: 0.5rem; }
+.lp-feature p { font-size: 0.85rem; color: #4a7a4a; line-height: 1.5; font-family: 'Exo 2', sans-serif; }
+.lp-footer { text-align: center; padding: 1.5rem; color: #4a7a4a; font-size: 0.75rem; font-family: 'DM Mono', monospace; border-top: 1px solid #1a3a1a; margin-top: auto; }
+
+/* ═══════════════════════════════════════════════════════════════
+   AUTH MODAL (Token Only)
+   ═══════════════════════════════════════════════════════════════ */
+.pat-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 99998; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.pat-modal.active { display: flex; }
+.pat-box { background: #0d1f0d; border: 1px solid #00c853; border-radius: 10px; padding: 2rem; max-width: 460px; width: 90%; position: relative; }
+.pat-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #4a7a4a; font-size: 1.2rem; cursor: pointer; }
+.pat-close:hover { color: #00e676; }
+.pat-title { font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; font-weight: 700; color: #69f0ae; margin-bottom: 0.3rem; }
+.pat-sub { font-size: 0.8rem; color: #4a7a4a; font-family: 'DM Mono', monospace; margin-bottom: 1.5rem; }
+.pat-help { background: #091509; border: 1px solid #1a3a1a; border-radius: 6px; padding: 1rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: #81c784; font-family: 'DM Mono', monospace; line-height: 1.6; }
+.pat-help a { color: #00e676; font-weight: 600; }
+.pat-input { width: 100%; background: #091509; border: 1px solid #224422; color: #c8e6c9; font-family: 'DM Mono', monospace; font-size: 0.85rem; padding: 0.7rem 1rem; border-radius: 4px; outline: none; margin-bottom: 0.5rem; transition: border-color 0.2s; }
+.pat-input:focus { border-color: #00e676; }
+.pat-btn { width: 100%; background: #00e676; color: #000; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 1px; border: none; padding: 0.7rem; border-radius: 4px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.5rem; }
+.pat-btn:hover { background: #00c853; }
+.pat-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.pat-btn-secondary { width: 100%; background: #0e4c92; color: #fff; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 1px; border: none; padding: 0.7rem; border-radius: 4px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.6rem; }
+.pat-btn-secondary:hover { background: #0a3d7a; }
+.pat-footer { font-size: 0.7rem; color: #4a7a4a; font-family: 'DM Mono', monospace; margin-top: 0.8rem; text-align: center; }
+.entry-gate-error { color: #ff5252; font-size: 0.8rem; margin-bottom: 0.8rem; min-height: 1.2rem; font-weight: 600; }
+.entry-gate-spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ═══════════════════════════════════════════════════════════════
+   APP SHELL — dbtraders.com + Deriv Hub Light Theme
+   ═══════════════════════════════════════════════════════════════ */
+.app-shell { display: none; flex-direction: column; height: 100vh; background: var(--bg); }
+.app-shell.active { display: flex; }
+
+/* ═══ TOP NAV ═══ */
+.top-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface); border-bottom: 1px solid var(--border-light);
+  padding: 0 1.5rem; height: 56px; flex-shrink: 0;
+}
+.top-nav-left { display: flex; align-items: center; gap: 1.5rem; }
+.top-logo { display: flex; align-items: center; gap: 0.6rem; font-size: 1.1rem; font-weight: 700; color: var(--text); }
+.top-logo-icon {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  border-radius: 6px; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 0.9rem;
+}
+.top-nav-link {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 0.9rem; color: var(--text-secondary); font-size: 0.82rem; font-weight: 500;
+  text-decoration: none; border-radius: 4px; transition: all 0.15s; cursor: pointer;
+}
+.top-nav-link:hover { background: var(--bg); color: var(--text); }
+.top-nav-link.active { background: var(--green-light); color: var(--green-dark); font-weight: 600; }
+
+.top-nav-right { display: flex; align-items: center; gap: 0.8rem; }
+.btn-deposit {
+  background: var(--green); color: #fff; font-family: var(--font); font-weight: 600;
+  font-size: 0.8rem; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;
+}
+.btn-deposit:hover { background: var(--green-dark); }
+.btn-fast {
+  background: var(--surface); border: 1px solid var(--border); color: var(--text-secondary);
+  font-size: 0.7rem; font-weight: 600; padding: 0.35rem 0.6rem; border-radius: 4px; cursor: pointer;
+}
+.acc-pill {
+  display: flex; align-items: center; gap: 0.5rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+  padding: 0.3rem 0.8rem; cursor: pointer; transition: all 0.15s;
+}
+.acc-pill:hover { border-color: var(--green); }
+.acc-balance { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600; }
+.acc-badge {
+  font-size: 0.6rem; padding: 0.15rem 0.4rem; border-radius: 4px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+}
+.acc-badge.demo { background: var(--blue-light); color: var(--blue); border: 1px solid #b8d4e8; }
+.acc-badge.real { background: var(--green-light); color: var(--green-dark); border: 1px solid #b3e0dd; }
+.acc-dropdown {
+  display: none; position: absolute; right: 1rem; top: 48px;
+  background: #fff; border: 1px solid var(--border); border-radius: 8px;
+  min-width: 320px; z-index: 999; box-shadow: var(--shadow-lg); overflow: hidden;
+}
+.acc-dropdown.show { display: block; }
+.acc-dropdown-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.8rem 1rem; border-bottom: 1px solid var(--border-light);
+}
+.acc-dropdown-title { font-size: 0.9rem; font-weight: 600; }
+.acc-logout-btn {
+  background: var(--red); color: #fff; border: none; padding: 0.35rem 0.8rem;
+  border-radius: 4px; font-weight: 600; font-size: 0.75rem; cursor: pointer;
+}
+.acc-section-label {
+  padding: 0.5rem 1rem; font-size: 0.6rem; color: var(--text-muted);
+  font-family: var(--font-mono); letter-spacing: 1.5px; text-transform: uppercase;
+  background: #f8f9fa; border-bottom: 1px solid var(--border-light);
+}
+.acc-card {
+  display: flex; align-items: center; gap: 0.8rem;
+  padding: 0.7rem 1rem; cursor: pointer; transition: background 0.15s;
+  border-bottom: 1px solid #f5f5f5;
+}
+.acc-card:hover { background: #f8f9fa; }
+.acc-card.active { background: #f0f8f0; border-left: 3px solid var(--green); }
+.acc-card-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.acc-card-icon.demo { background: linear-gradient(135deg, #ff6b35, #ff8c5a); }
+.acc-card-icon.real { background: linear-gradient(135deg, #1a3a6e, #2a5a9e); }
+.acc-card-info { flex: 1; }
+.acc-card-type { font-size: 0.7rem; color: var(--text-muted); }
+.acc-card-name { font-size: 0.8rem; font-weight: 600; }
+.acc-card-balance { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600; }
+
+/* ═══ SUB NAV (dbtraders blue bar) ═══ */
+.sub-nav {
+  display: flex; align-items: center; gap: 0.2rem;
+  padding: 0 1.5rem; background: var(--blue);
+  border-bottom: 1px solid var(--border); overflow-x: auto; flex-shrink: 0;
+}
+.sub-nav::-webkit-scrollbar { height: 2px; }
+.sub-nav-link {
+  padding: 0.55rem 0.9rem; font-size: 0.78rem; font-weight: 500;
+  color: rgba(255,255,255,0.75); text-decoration: none; border-radius: 4px;
+  transition: all 0.15s; display: flex; align-items: center; gap: 0.4rem;
+  white-space: nowrap; cursor: pointer; border: none; background: none;
+}
+.sub-nav-link:hover { color: #fff; background: rgba(255,255,255,0.12); }
+.sub-nav-link.active { color: #fff; background: rgba(255,255,255,0.2); font-weight: 600; }
+
+/* ═══ MAIN LAYOUT ═══ */
+.main-area { display: flex; flex: 1; overflow: hidden; }
+
+/* ═══ SIDEBAR ═══ */
+.sidebar {
+  width: 240px; background: var(--surface); border-right: 1px solid var(--border-light);
+  display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0;
+}
+.sidebar-section {
+  padding: 0.6rem 1rem; font-size: 0.65rem; color: var(--text-muted);
+  font-family: var(--font-mono); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 0.5rem;
+}
+.sidebar-item {
+  display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.55rem 1rem; color: var(--text-secondary); font-size: 0.85rem; font-weight: 500;
+  cursor: pointer; transition: all 0.15s; border-left: 3px solid transparent; text-decoration: none;
+}
+.sidebar-item:hover { color: var(--text); background: var(--bg); }
+.sidebar-item.active { color: var(--green-dark); background: var(--green-light); border-left-color: var(--green); font-weight: 600; }
+.sidebar-item i { width: 20px; text-align: center; font-size: 0.95rem; }
+.sidebar-divider { height: 1px; background: var(--border-light); margin: 0.5rem 1rem; }
+.sidebar-bottom { margin-top: auto; padding: 1rem; border-top: 1px solid var(--border-light); }
+.sidebar-user { display: flex; align-items: center; gap: 0.7rem; }
+.user-avatar {
+  width: 36px; height: 36px; background: var(--green); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 0.85rem; font-weight: 700;
+}
+.user-name { font-size: 0.8rem; font-weight: 600; }
+.user-type { font-size: 0.65rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+/* ═══ CONTENT AREA ═══ */
+.content-area { flex: 1; padding: 1.5rem; overflow-y: auto; background: var(--bg); }
+.panel { display: none; }
+.panel.active { display: block; animation: fadeIn 0.25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ═══ CARDS ═══ */
+.card {
+  background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius);
+  padding: 1.2rem; box-shadow: var(--shadow); transition: all 0.2s;
+}
+.card:hover { box-shadow: var(--shadow-lg); border-color: var(--border); }
+.card-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; color: var(--text); }
+
+/* ═══ DASHBOARD (Deriv Hub style) ═══ */
+.wallet-card {
+  background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius);
+  padding: 1.5rem; display: flex; align-items: center; gap: 1rem;
+  max-width: 320px; margin-bottom: 1.5rem;
+}
+.wallet-icon { width: 48px; height: 48px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--green); font-size: 1.3rem; }
+.wallet-balance { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; }
+.wallet-label { font-size: 0.75rem; color: var(--text-muted); }
+
+.platform-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.platform-card {
+  background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius);
+  padding: 1.2rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: flex-start; gap: 1rem;
+}
+.platform-card:hover { border-color: var(--green); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.platform-icon { width: 48px; height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #fff; font-weight: 700; flex-shrink: 0; }
+.platform-icon.dt { background: linear-gradient(135deg, #ff444f, #ff6b6b); }
+.platform-icon.db { background: linear-gradient(135deg, #0e4c92, #3b82f6); }
+.platform-icon.st { background: linear-gradient(135deg, #7b1fa2, #a855f7); }
+.platform-icon.go { background: linear-gradient(135deg, #ff8c00, #fbbf24); }
+.platform-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+.platform-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; }
+
+.trade-types { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem; }
+.trade-type {
+  background: var(--bg); border: 1px solid var(--border-light); border-radius: 8px;
+  padding: 1rem; text-align: center; cursor: pointer; transition: all 0.15s;
+}
+.trade-type:hover { border-color: var(--green); background: var(--green-light); }
+.trade-type i { font-size: 1.3rem; color: var(--text-secondary); margin-bottom: 0.5rem; display: block; }
+.trade-type-label { font-size: 0.8rem; font-weight: 600; color: var(--text); }
+
+/* ═══ BOT EDITOR (dbtraders style) ═══ */
+.bot-editor-layout { display: flex; gap: 1rem; height: calc(100vh - 160px); }
+.bot-editor-main { flex: 1; display: flex; flex-direction: column; gap: 1rem; overflow-y: auto; }
+.bot-editor-right { width: 340px; flex-shrink: 0; display: flex; flex-direction: column; gap: 1rem; }
+
+.icon-grid { display: flex; gap: 1.5rem; justify-content: center; padding: 2rem; }
+.icon-grid-item {
+  display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.icon-grid-item:hover { transform: translateY(-4px); }
+.icon-grid-circle {
+  width: 72px; height: 72px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.icon-grid-circle.blue { background: linear-gradient(135deg, #0e4c92, #3b82f6); }
+.icon-grid-circle.cyan { background: linear-gradient(135deg, #06b6d4, #22d3ee); }
+.icon-grid-circle.green { background: linear-gradient(135deg, #059669, #10b981); }
+.icon-grid-circle.purple { background: linear-gradient(135deg, #7c3aed, #8b5cf6); }
+.icon-grid-label { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); }
+
+.bot-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.bot-table th { text-align: left; padding: 0.7rem; color: var(--text-muted); font-weight: 600; font-size: 0.75rem; border-bottom: 1px solid var(--border-light); }
+.bot-table td { padding: 0.7rem; border-bottom: 1px solid var(--border-light); color: var(--text-secondary); }
+.bot-table tr:hover td { background: #f8f9fa; }
+.bot-status { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.75rem; }
+.bot-actions { display: flex; gap: 0.4rem; }
+.bot-actions button { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; padding: 0.2rem; }
+.bot-actions button:hover { color: var(--green); }
+
+/* Right panel tabs */
+.rp-tabs { display: flex; border-bottom: 1px solid var(--border-light); }
+.rp-tab {
+  flex: 1; text-align: center; padding: 0.6rem; font-size: 0.8rem; font-weight: 600;
+  color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent;
+}
+.rp-tab:hover { color: var(--text); }
+.rp-tab.active { color: var(--green-dark); border-bottom-color: var(--green); }
+.rp-content { padding: 1rem; }
+.rp-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1rem; }
+.rp-stat { text-align: center; }
+.rp-stat-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.rp-stat-value { font-family: var(--font-mono); font-size: 1rem; font-weight: 600; margin-top: 0.2rem; }
+
+/* ═══ BOT BUILDER (DBot workspace) ═══ */
+.bb-workspace-wrap { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+.bb-toolbar {
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem;
+  background: var(--surface); border-bottom: 1px solid var(--border-light);
+}
+.bb-btn {
+  padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.78rem; font-weight: 600;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text-secondary);
+  cursor: pointer; display: flex; align-items: center; gap: 0.35rem; transition: all 0.15s;
+}
+.bb-btn:hover { background: var(--bg); border-color: var(--green); color: var(--green-dark); }
+.bb-btn.run { background: var(--green); color: #fff; border-color: var(--green); }
+.bb-btn.run:hover { background: var(--green-dark); }
+.bb-btn.stop { background: var(--red); color: #fff; border-color: var(--red); }
+.bb-btn.stop:hover { background: #dc2626; }
+.bb-status { margin-left: auto; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem; }
+.bb-status.running { color: var(--green); font-weight: 700; }
+
+.bb-layout { display: grid; grid-template-columns: 240px 1fr 300px; grid-template-rows: 1fr 180px; flex: 1; gap: 1px; background: var(--border-light); }
+.bb-toolbox { background: var(--surface); display: flex; flex-direction: column; overflow: hidden; }
+.bb-toolbox-search { padding: 0.6rem; border-bottom: 1px solid var(--border-light); }
+.bb-toolbox-search input { width: 100%; padding: 0.4rem 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.8rem; outline: none; }
+.bb-toolbox-cat { border-bottom: 1px solid var(--border-light); }
+.bb-toolbox-cat-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.5rem 0.7rem; font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);
+  cursor: pointer;
+}
+.bb-toolbox-cat-header i { font-size: 0.65rem; color: var(--text-muted); transition: transform 0.2s; }
+.bb-toolbox-cat-header.collapsed i { transform: rotate(-90deg); }
+.bb-toolbox-items { display: flex; flex-direction: column; }
+.bb-toolbox-items.hidden { display: none; }
+.bb-toolbox-item {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.35rem 0.7rem 0.35rem 1.2rem; font-size: 0.78rem; color: var(--text-muted);
+  cursor: grab; transition: all 0.15s; border-left: 3px solid transparent;
+}
+.bb-toolbox-item:hover { background: var(--green-light); border-left-color: var(--green); color: var(--text); }
+
+.bb-canvas {
+  background: var(--bg); padding: 1rem; overflow-y: auto; position: relative;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.bb-stack { display: flex; flex-direction: column; gap: 0.6rem; max-width: 480px; margin: 0 auto; }
+.bb-block {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  overflow: hidden; box-shadow: var(--shadow); transition: all 0.2s;
+}
+.bb-block:hover { transform: translateX(2px); border-color: var(--green); }
+.bb-block-header {
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.7rem;
+  font-size: 0.8rem; font-weight: 700; color: #fff;
+}
+.bb-block-header.blue { background: linear-gradient(90deg, #2563eb, #3b82f6); }
+.bb-block-header.green { background: linear-gradient(90deg, #059669, #10b981); }
+.bb-block-header.purple { background: linear-gradient(90deg, #7c3aed, #8b5cf6); }
+.bb-block-header.orange { background: linear-gradient(90deg, #d97706, #f59e0b); }
+.bb-block-body { padding: 0.7rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.bb-field { display: flex; align-items: center; gap: 0.5rem; }
+.bb-field label { font-size: 0.78rem; color: var(--text-secondary); min-width: 90px; }
+.bb-field input, .bb-field select {
+  flex: 1; padding: 0.3rem 0.5rem; border: 1px solid var(--border); border-radius: 5px;
+  font-size: 0.78rem; outline: none;
+}
+.bb-field input:focus, .bb-field select:focus { border-color: var(--green); }
+
+.bb-runpanel { background: var(--surface); display: flex; flex-direction: column; overflow: hidden; }
+.bb-runpanel-tabs { display: flex; border-bottom: 1px solid var(--border-light); }
+.bb-runpanel-tab {
+  flex: 1; text-align: center; padding: 0.5rem; font-size: 0.75rem; font-weight: 600;
+  color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent;
+}
+.bb-runpanel-tab.active { color: var(--green-dark); border-bottom-color: var(--green); }
+.bb-runpanel-content { flex: 1; overflow-y: auto; padding: 0.8rem; font-size: 0.8rem; }
+
+.bb-chartpanel { grid-column: 1 / -1; background: var(--surface); border-top: 1px solid var(--border-light); padding: 0.5rem 1rem; }
+#bb-chart { width: 100%; height: 140px; background: var(--bg); border-radius: 6px; }
+
+/* ═══ TRADE PANEL (dbtraders/wealthdbot) ═══ */
+.trade-layout { display: grid; grid-template-columns: 1fr 360px; gap: 1rem; }
+@media (max-width: 1100px) { .trade-layout { grid-template-columns: 1fr; } }
+.chart-box {
+  background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius);
+  padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; height: 420px;
+}
+#trade-chart { width: 100%; flex: 1; background: #fafafa; border-radius: 6px; }
+.ticket {
+  background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius);
+  padding: 1.2rem; display: flex; flex-direction: column; gap: 0.7rem;
+}
+.ticket-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.3rem; }
+.ticket-field label { display: block; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.3rem; font-weight: 500; }
+.ticket-field input, .ticket-field select {
+  width: 100%; padding: 0.45rem 0.6rem; border: 1px solid var(--border); border-radius: 6px;
+  font-size: 0.85rem; outline: none; font-family: var(--font);
+}
+.ticket-field input:focus, .ticket-field select:focus { border-color: var(--green); }
+.ticket-row { display: flex; gap: 0.6rem; }
+.ticket-row .ticket-field { flex: 1; }
+.buy-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.3rem; }
+.buy-btn {
+  padding: 0.8rem; border-radius: 8px; border: none; font-weight: 700; font-size: 0.85rem;
+  cursor: pointer; transition: all 0.15s; display: flex; flex-direction: column; align-items: center;
+}
+.buy-btn.up { background: linear-gradient(135deg, #059669, #10b981); color: #fff; }
+.buy-btn.down { background: linear-gradient(135deg, #dc2626, #ef4444); color: #fff; }
+.buy-btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
+
+/* ═══ MARKETS ═══ */
+.market-cat-title { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin: 1.2rem 0 0.6rem; }
+.market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.7rem; }
+.market-item {
+  background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius);
+  padding: 0.8rem 1rem; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: space-between;
+}
+.market-item:hover { border-color: var(--green); background: var(--green-light); }
+.market-item.active { border-color: var(--green); background: var(--green-light); }
+.market-name { font-size: 0.8rem; font-weight: 600; }
+.market-code { font-size: 0.65rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+/* ═══ POSITIONS ═══ */
+.pos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+.pos-card {
+  background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius);
+  padding: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem;
+}
+.pos-pl { font-family: var(--font-mono); font-size: 1.2rem; font-weight: 600; }
+.pos-pl.green { color: var(--green); }
+.pos-pl.red { color: var(--red); }
+
+/* ═══ TABLES ═══ */
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.data-table th { text-align: left; padding: 0.7rem; color: var(--text-muted); font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-light); background: #f8f9fa; }
+.data-table td { padding: 0.7rem; border-bottom: 1px solid var(--border-light); color: var(--text-secondary); }
+.data-table tr:hover td { background: #f8f9fa; }
+.badge { font-size: 0.65rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
+.badge-win { background: var(--green-light); color: var(--green-dark); }
+.badge-loss { background: var(--red-light); color: var(--red); }
+.badge-open { background: var(--blue-light); color: var(--blue); }
+
+/* ═══ BOTTOM RUN BAR (dbtraders style) ═══ */
+.run-bar {
+  display: flex; align-items: center; gap: 1rem;
+  background: var(--surface); border-top: 1px solid var(--border-light);
+  padding: 0.6rem 1.5rem; flex-shrink: 0;
+}
+.run-btn {
+  display: flex; align-items: center; gap: 0.4rem;
+  background: var(--green); color: #fff; border: none; padding: 0.5rem 1.2rem;
+  border-radius: 6px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.15s;
+}
+.run-btn:hover { background: var(--green-dark); }
+.run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.run-status { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+.run-status.running { color: var(--green); }
+.run-time { margin-left: auto; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); }
+.run-controls { display: flex; gap: 0.5rem; }
+.run-controls button { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; padding: 0.3rem; }
+.run-controls button:hover { color: var(--text); }
+
+/* ═══ RISK DISCLAIMER ═══ */
+.risk-banner {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--yellow); color: #333; padding: 0.5rem 1.5rem;
+  font-size: 0.75rem; font-weight: 600; z-index: 100;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+
+/* ═══ AI ASSISTANT FLOATING BUTTON ═══ */
+.ai-assistant {
+  position: fixed; bottom: 3rem; right: 1.5rem;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, #7b1fa2, #a855f7);
+  color: #fff; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; box-shadow: 0 4px 16px rgba(123,31,162,0.4);
+  z-index: 200; transition: all 0.2s;
+}
+.ai-assistant:hover { transform: scale(1.1); }
+.ai-label {
+  position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+  background: var(--text); color: #fff; font-size: 0.65rem; font-weight: 700;
+  padding: 0.15rem 0.4rem; border-radius: 4px; white-space: nowrap;
+}
+
+/* ═══ NOTIFICATION ═══ */
+.notif {
+  position: fixed; bottom: 3.5rem; right: 1.5rem;
+  background: var(--surface); border: 1px solid var(--border-light); border-radius: 8px;
+  padding: 0.8rem 1.2rem; display: flex; align-items: center; gap: 0.7rem;
+  z-index: 9999; transform: translateY(120px); opacity: 0; transition: all 0.3s;
+  box-shadow: var(--shadow-lg);
+}
+.notif.show { transform: translateY(0); opacity: 1; }
+.notif i { color: var(--green); font-size: 1rem; }
+.notif p { font-size: 0.82rem; }
+
+/* ═══ SCROLLBAR ═══ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .sidebar { width: 60px; }
+  .sidebar-section, .sidebar-item span, .user-info { display: none; }
+  .sidebar-item { justify-content: center; padding: 0.65rem; }
+  .sidebar-item i { width: auto; font-size: 1.1rem; }
+  .bot-editor-right { width: 280px; }
+}
+@media (max-width: 768px) {
+  .trade-layout, .bot-editor-layout { grid-template-columns: 1fr; }
+  .sub-nav { padding: 0 0.5rem; }
+  .top-nav { padding: 0 0.8rem; }
+  .content-area { padding: 0.8rem; }
+  .bb-layout { grid-template-columns: 1fr; grid-template-rows: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     LANDING PORTAL
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="entry-gate" id="entry-gate">
+  <nav class="lp-nav">
+    <div class="lp-logo"><span class="k">KIM</span><span class="hub">HUB</span><span class="trades">TRADERS</span></div>
+    <div class="lp-links">
+      <a href="#" onclick="return false;">Features</a>
+      <a href="#" onclick="return false;">Bots</a>
+      <a href="#" onclick="return false;">Copy Trade</a>
+    </div>
+    <button class="lp-btn-connect" onclick="Auth.showModal()"><i class="fas fa-link"></i> &nbsp;Connect Deriv</button>
+  </nav>
+
+  <div class="lp-hero">
+    <div class="lp-hero-badge"><i class="fas fa-circle"></i> LIVE TRADING HUB</div>
+    <h1><div class="line1">TRADE SMARTER</div><div class="line2">WITH KIMHUB</div></h1>
+    <p>Kenya's premier Deriv-powered trading hub. Access all global markets, execute in milliseconds, and track every penny — all in one platform.</p>
+    <div class="lp-hero-btns">
+      <button class="lp-btn-primary" onclick="Auth.showModal()"><i class="fas fa-sign-in-alt"></i> &nbsp;Connect Account</button>
+      <button class="lp-btn-outline" onclick="Auth.enterDemo()"><i class="fas fa-eye"></i> &nbsp;Preview Demo</button>
+    </div>
+  </div>
+
+  <div class="lp-stats">
+    <div class="lp-stat"><div class="lp-stat-num">2,500+</div><div class="lp-stat-lbl">Active Traders</div></div>
+    <div class="lp-stat"><div class="lp-stat-num">150+</div><div class="lp-stat-lbl">Global Markets</div></div>
+    <div class="lp-stat"><div class="lp-stat-num">24/7</div><div class="lp-stat-lbl">Live Markets</div></div>
+    <div class="lp-stat"><div class="lp-stat-num">$0</div><div class="lp-stat-lbl">Platform Fee</div></div>
+  </div>
+
+  <div class="lp-features">
+    <div class="lp-feature"><div class="lp-feature-icon"><i class="fas fa-chart-line"></i></div><h3>Live Market Prices</h3><p>Real-time feeds for Volatility Indices, Forex, Commodities, and Stock Indices — powered by Deriv.</p></div>
+    <div class="lp-feature"><div class="lp-feature-icon"><i class="fas fa-robot"></i></div><h3>Deriv DBot Builder</h3><p>Visual block-based strategy builder. Drag, drop, and deploy bots without writing code.</p></div>
+    <div class="lp-feature"><div class="lp-feature-icon"><i class="fas fa-globe"></i></div><h3>All Deriv Markets</h3><p>Trade Derived Indices, major Forex pairs, global Stock Indices, and precious metals.</p></div>
+    <div class="lp-feature"><div class="lp-feature-icon"><i class="fas fa-shield-alt"></i></div><h3>Your Funds Stay Safe</h3><p>We never touch your money. Connect securely via API token — you stay in full control.</p></div>
+    <div class="lp-feature"><div class="lp-feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>Trade Anywhere</h3><p>Fully responsive. Access your dashboard and execute trades from any device.</p></div>
+    <div class="lp-feature"><div class="lp-feature-icon"><i class="fas fa-graduation-cap"></i></div><h3>Trading Education</h3><p>Free strategy guides, risk management tools, and market analysis.</p></div>
+  </div>
+
+  <div class="lp-footer">
+    KimHub Traders is an independent third-party platform. Powered by Deriv API. &nbsp;|&nbsp; Trading involves risk. &nbsp;|&nbsp; &copy; 2026 KimHub Traders
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     AUTH MODAL
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="pat-modal" id="auth-modal">
+  <div class="pat-box">
+    <button class="pat-close" onclick="Auth.hideModal()"><i class="fas fa-times"></i></button>
+    <div class="pat-title">Connect Deriv Account</div>
+    <p class="pat-sub">Paste your Deriv API token to connect securely.</p>
+    <div class="pat-help">
+      <b style="color:#00e676;">How to get your token:</b><br>
+      1. Go to <a href="https://app.deriv.com/account/api-token" target="_blank">app.deriv.com/account/api-token</a><br>
+      2. Create a token with <b>Read + Trade</b> scope<br>
+      3. Copy and paste it below
+    </div>
+    <input type="password" class="pat-input" id="auth-token-input" placeholder="Enter your Deriv API token...">
+    <div class="entry-gate-error" id="auth-error"></div>
+    <button class="pat-btn" id="auth-btn" onclick="Auth.login()">
+      <span class="entry-gate-spinner" id="auth-spinner"></span>
+      <span id="auth-btn-text">Connect Account</span>
+      <i class="fas fa-arrow-right" id="auth-btn-icon"></i>
+    </button>
+    <button class="pat-btn-secondary" onclick="Auth.enterDemo()">
+      <i class="fas fa-vial"></i> Continue in Demo Mode
+    </button>
+    <div id="saved-accounts-wrap" style="margin-top:1rem;text-align:left;display:none;">
+      <div style="font-size:0.7rem;color:#4a7a4a;font-family:'DM Mono',monospace;letter-spacing:1px;text-transform:uppercase;margin-bottom:0.5rem;">Saved Accounts</div>
+      <div id="saved-accounts-list"></div>
+    </div>
+    <p class="pat-footer">Your token connects directly to Deriv's servers. We do not store it on any backend.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     NOTIFICATION
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="notif" id="notif"><i class="fas fa-check-circle"></i><p id="notif-text">Notification</p></div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     APP SHELL
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="app-shell" id="app-shell">
+
+  <!-- TOP NAV -->
+  <div class="top-nav">
+    <div class="top-nav-left">
+      <div class="top-logo">
+        <div class="top-logo-icon"><i class="fas fa-chart-line"></i></div>
+        <span>KimHubTraders</span>
+      </div>
+      <div style="display:flex;gap:0.3rem;">
+        <a class="top-nav-link" onclick="UI.switchTab('dashboard')"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a class="top-nav-link" onclick="UI.switchTab('reports')"><i class="fas fa-file-alt"></i> Reports</a>
+      </div>
+    </div>
+    <div class="top-nav-right">
+      <button class="btn-deposit" onclick="window.open('https://app.deriv.com/cashier/deposit','_blank')">Deposit / Withdraw</button>
+      <button class="btn-fast">FAST</button>
+      <div style="position:relative;">
+        <div class="acc-pill" onclick="Auth.toggleDropdown()">
+          <span class="acc-balance" id="header-balance">--.--</span>
+          <span class="acc-badge demo" id="header-badge">Demo</span>
+          <i class="fas fa-chevron-down" style="font-size:0.6rem;color:var(--text-muted);"></i>
+        </div>
+        <div class="acc-dropdown" id="acc-dropdown">
+          <div class="acc-dropdown-header">
+            <span class="acc-dropdown-title">Accounts</span>
+            <button class="acc-logout-btn" onclick="Auth.logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+          </div>
+          <div class="acc-section-label">CONNECTED</div>
+          <div id="acc-connected-list"></div>
+          <div class="acc-section-label">OTHER ACCOUNTS</div>
+          <div id="acc-other-list"></div>
+          <div class="acc-card" onclick="Auth.showModal(); Auth.toggleDropdown();" style="border-top:1px solid var(--border-light);">
+            <div class="acc-card-icon" style="background:#334155;"><i class="fas fa-plus" style="color:#fff;"></i></div>
+            <div class="acc-card-info"><div class="acc-card-name">Add Account</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB NAV (dbtraders blue bar) -->
+  <div class="sub-nav" id="sub-nav">
+    <button class="sub-nav-link active" onclick="UI.switchTab('dashboard', this)"><i class="fas fa-th-large"></i> Dashboard</button>
+    <button class="sub-nav-link" onclick="UI.switchTab('boteditor', this)"><i class="fas fa-cube"></i> Bot Editor</button>
+    <button class="sub-nav-link" onclick="UI.switchTab('speedbot', this)"><i class="fas fa-bolt"></i> Speedbot</button>
+    <button class="sub-nav-link" onclick="UI.switchTab('trading', this)"><i class="fas fa-laptop"></i> Trading Software</button>
+    <button class="sub-nav-link" onclick="UI.switchTab('ualed', this)"><i class="fas fa-code-branch"></i> Dual Edge</button>
+    <button class="sub-nav-link" onclick="UI.switchTab('apex', this)"><i class="fas fa-globe"></i> Apex Market</button>
+    <button class="sub-nav-link" onclick="UI.switchTab('manual', this)"><i class="fas fa-hand-pointer"></i> Manual Trader</button>
+    <button class="sub-nav-link" onclick="UI.switchTab('analysis', this)"><i class="fas fa-chart-bar"></i> Analysis Tools</button>
+    <button class="sub-nav-link" onclick="UI.switchTab('ldp', this)"><i class="fas fa-hashtag"></i> LDP Tool</button>
+    <button class="sub-nav-link" onclick="UI.switchTab('charts', this)"><i class="fas fa-chart-area"></i> Charts</button>
+    <button class="sub-nav-link" onclick="UI.switchTab('copy', this)"><i class="fas fa-users"></i> Copy Trading</button>
+  </div>
+
+  <!-- MAIN AREA -->
+  <div class="main-area">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-section">Menu</div>
+      <a class="sidebar-item active" onclick="UI.switchTab('dashboard', this)"><i class="fas fa-th-large"></i> <span>Dashboard</span></a>
+      <a class="sidebar-item" onclick="UI.switchTab('boteditor', this)"><i class="fas fa-cube"></i> <span>Bot Editor</span></a>
+      <a class="sidebar-item" onclick="UI.switchTab('trading', this)"><i class="fas fa-laptop"></i> <span>Trade</span></a>
+      <a class="sidebar-item" onclick="UI.switchTab('markets', this)"><i class="fas fa-globe"></i> <span>Markets</span></a>
+      <a class="sidebar-item" onclick="UI.switchTab('positions', this)"><i class="fas fa-crosshairs"></i> <span>Positions</span></a>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">History</div>
+      <a class="sidebar-item" onclick="UI.switchTab('history', this)"><i class="fas fa-history"></i> <span>History</span></a>
+      <a class="sidebar-item" onclick="UI.switchTab('journal', this)"><i class="fas fa-book"></i> <span>Journal</span></a>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">System</div>
+      <a class="sidebar-item" onclick="UI.switchTab('settings', this)"><i class="fas fa-cog"></i> <span>Settings</span></a>
+      <a class="sidebar-item" style="color:var(--red);" onclick="Auth.logout()"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+      <div class="sidebar-bottom">
+        <div class="sidebar-user">
+          <div class="user-avatar" id="sidebar-avatar">K</div>
+          <div class="user-info">
+            <div class="user-name" id="sidebar-name">Trader</div>
+            <div class="user-type" id="sidebar-id">Disconnected</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content-area">
+
+      <!-- DASHBOARD (Deriv Hub style) -->
+      <div class="panel active" id="panel-dashboard">
+        <div class="wallet-card">
+          <div class="wallet-icon"><i class="fas fa-wallet"></i></div>
+          <div>
+            <div class="wallet-balance" id="dash-wallet-balance">10,000.00</div>
+            <div class="wallet-label" id="dash-wallet-label">Demo USD wallet</div>
+          </div>
+        </div>
+
+        <div class="card-title" style="margin-bottom:0.8rem;">Try demo trading</div>
+        <div class="platform-grid">
+          <div class="platform-card" onclick="UI.switchTab('trading')">
+            <div class="platform-icon dt"><i class="fas fa-chart-line"></i></div>
+            <div>
+              <div class="platform-name">Deriv Trader</div>
+              <div class="platform-desc">Diverse trading options, low-entry costs.</div>
+              <div class="trade-types" style="margin-top:0.6rem;grid-template-columns:repeat(2,1fr);">
+                <div class="trade-type"><i class="fas fa-layer-group"></i><span class="trade-type-label">Accumulators</span></div>
+                <div class="trade-type"><i class="fas fa-bolt"></i><span class="trade-type-label">Turbos</span></div>
+                <div class="trade-type"><i class="fas fa-file-contract"></i><span class="trade-type-label">Vanilla options</span></div>
+                <div class="trade-type"><i class="fas fa-times"></i><span class="trade-type-label">Multipliers</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="platform-card" onclick="UI.switchTab('boteditor')">
+            <div class="platform-icon db"><i class="fas fa-robot"></i></div>
+            <div>
+              <div class="platform-name">Deriv Bot</div>
+              <div class="platform-desc">Automated trading with custom bots.</div>
+            </div>
+          </div>
+          <div class="platform-card" onclick="UI.switchTab('trading')">
+            <div class="platform-icon st"><i class="fas fa-magic"></i></div>
+            <div>
+              <div class="platform-name">SmartTrader</div>
+              <div class="platform-desc">Simple interface for traders of all levels.</div>
+            </div>
+          </div>
+          <div class="platform-card">
+            <div class="platform-icon go"><i class="fas fa-mobile-alt"></i></div>
+            <div>
+              <div class="platform-name">Deriv GO</div>
+              <div class="platform-desc">Mobile trading on-the-go.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-title" style="margin-bottom:0.8rem;">Suggested for you</div>
+        <div class="platform-grid">
+          <div class="platform-card">
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+              <div class="platform-icon dt" style="width:40px;height:40px;font-size:1rem;"><i class="fas fa-star"></i></div>
+              <div><div class="platform-name">Standard</div><div class="platform-desc">Diverse financial and derived instruments.</div></div>
+            </div>
+          </div>
+          <div class="platform-card">
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+              <div class="platform-icon go" style="width:40px;height:40px;font-size:1rem;background:linear-gradient(135deg,#fbbf24,#f59e0b);"><i class="fas fa-coins"></i></div>
+              <div><div class="platform-name">Gold</div><div class="platform-desc">Trading opportunities on popular precious metals.</div></div>
+            </div>
+          </div>
+          <div class="platform-card">
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+              <div class="platform-icon db" style="width:40px;height:40px;font-size:1rem;background:linear-gradient(135deg,#ef4444,#dc2626);"><i class="fas fa-copy"></i></div>
+              <div><div class="platform-name">cTrader</div><div class="platform-desc">Easy replication of trading strategies.</div></div>
+            </div>
+          </div>
+          <div class="platform-card">
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+              <div class="platform-icon st" style="width:40px;height:40px;font-size:1rem;background:linear-gradient(135deg,#06b6d4,#22d3ee);"><i class="fas fa-moon"></i></div>
+              <div><div class="platform-name">Swap-free</div><div class="platform-desc">Overnight position holdings with no swap fees.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOT EDITOR (dbtraders style) -->
+      <div class="panel" id="panel-boteditor">
+        <div class="bot-editor-layout">
+          <div class="bot-editor-main">
+            <div class="card">
+              <div style="text-align:center;color:var(--text-secondary);padding:1.5rem;">
+                <p style="margin-bottom:1.5rem;">Import a bot from your computer or Google Drive, build it from scratch, or start with a quick strategy.</p>
+                <div class="icon-grid">
+                  <div class="icon-grid-item" onclick="UI.notify('Upload bot coming soon')">
+                    <div class="icon-grid-circle blue"><i class="fas fa-upload"></i></div>
+                    <span class="icon-grid-label">Upload Bot</span>
+                  </div>
+                  <div class="icon-grid-item" onclick="UI.switchTab('botbuilder')">
+                    <div class="icon-grid-circle cyan"><i class="fas fa-robot"></i></div>
+                    <span class="icon-grid-label">Trading Bots</span>
+                  </div>
+                  <div class="icon-grid-item" onclick="UI.switchTab('botbuilder')">
+                    <div class="icon-grid-circle green"><i class="fas fa-cubes"></i></div>
+                    <span class="icon-grid-label">Bot Editor</span>
+                  </div>
+                  <div class="icon-grid-item" onclick="BotEditor.loadQuick()">
+                    <div class="icon-grid-circle purple"><i class="fas fa-magic"></i></div>
+                    <span class="icon-grid-label">Quick strategy</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Your bots:</div>
+              <table class="bot-table">
+                <thead>
+                  <tr><th>Bot name</th><th>Last modified</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="bot-table-body">
+                  <tr><td>Untitled Bot</td><td>5h ago</td><td><span class="bot-status"><i class="fas fa-file"></i> Unsaved</span></td>
+                    <td><div class="bot-actions"><button title="Clone"><i class="fas fa-clone"></i></button><button title="Save"><i class="fas fa-save"></i></button><button title="Delete"><i class="fas fa-trash"></i></button></div></td></tr>
+                  <tr><td>KimHub Pivot Pro</td><td>11 May 2026</td><td><span class="bot-status"><i class="fas fa-check-circle" style="color:var(--green);"></i> Saved</span></td>
+                    <td><div class="bot-actions"><button title="Clone"><i class="fas fa-clone"></i></button><button title="Save"><i class="fas fa-save"></i></button><button title="Delete"><i class="fas fa-trash"></i></button></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="bot-editor-right">
+            <div class="card" style="padding:0;overflow:hidden;">
+              <div class="rp-tabs">
+                <div class="rp-tab active" onclick="BotEditor.switchTab('summary', this)">Summary</div>
+                <div class="rp-tab" onclick="BotEditor.switchTab('transactions', this)">Transactions</div>
+                <div class="rp-tab" onclick="BotEditor.switchTab('journal', this)">Journal</div>
+              </div>
+              <div class="rp-content" id="rp-summary">
+                <div style="text-align:center;color:var(--text-muted);font-size:0.8rem;margin-bottom:1rem;">
+                  When you're ready to trade, hit <b>Run</b>.<br>You'll be able to track your bot's performance here.
+                </div>
+                <div class="rp-stat-grid">
+                  <div class="rp-stat"><div class="rp-stat-label">Total stake</div><div class="rp-stat-value" id="rp-stake">0.00 USD</div></div>
+                  <div class="rp-stat"><div class="rp-stat-label">Total payout</div><div class="rp-stat-value" id="rp-payout">0.00 USD</div></div>
+                  <div class="rp-stat"><div class="rp-stat-label">Contracts lost</div><div class="rp-stat-value" id="rp-lost">0</div></div>
+                  <div class="rp-stat"><div class="rp-stat-label">Contracts won</div><div class="rp-stat-value" id="rp-won">0</div></div>
+                </div>
+                <div style="text-align:center;padding:0.5rem;border-top:1px solid var(--border-light);">
+                  <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.3rem;">Total profit/loss</div>
+                  <div style="font-family:var(--font-mono);font-size:1.1rem;font-weight:600;" id="rp-pnl">0.00 USD</div>
+                </div>
+                <button class="bb-btn" style="width:100%;margin-top:0.8rem;" onclick="BotEditor.resetStats()"><i class="fas fa-redo"></i> Reset</button>
+              </div>
+              <div class="rp-content" id="rp-transactions" style="display:none;">
+                <div style="color:var(--text-muted);text-align:center;padding:1rem;font-size:0.8rem;">No transactions yet</div>
+              </div>
+              <div class="rp-content" id="rp-journal" style="display:none;">
+                <div style="color:var(--text-muted);text-align:center;padding:1rem;font-size:0.8rem;">Journal is empty</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOT BUILDER (DBot workspace) -->
+      <div class="panel" id="panel-botbuilder">
+        <div class="bb-workspace-wrap">
+          <div class="bb-toolbar">
+            <button class="bb-btn run" id="bb-run-btn" onclick="BotBuilder.run()"><i class="fas fa-play"></i> Run</button>
+            <button class="bb-btn stop" id="bb-stop-btn" onclick="BotBuilder.stop()" style="display:none;"><i class="fas fa-stop"></i> Stop</button>
+            <button class="bb-btn" onclick="BotBuilder.reset()"><i class="fas fa-redo"></i> Reset</button>
+            <button class="bb-btn" onclick="BotBuilder.loadQuick('martingale')"><i class="fas fa-magic"></i> Martingale</button>
+            <button class="bb-btn" onclick="BotBuilder.loadQuick('dalembert')"><i class="fas fa-magic"></i> D'Alembert</button>
+            <div class="bb-status" id="bb-status"><span class="status-dot" style="width:8px;height:8px;border-radius:50%;background:var(--text-muted);display:inline-block;"></span> Bot is not running</div>
+          </div>
+          <div class="bb-layout">
+            <div class="bb-toolbox">
+              <div class="bb-toolbox-search"><input type="text" placeholder="Search blocks..." oninput="BotBuilder.filterBlocks(this.value)"></div>
+              <div style="overflow-y:auto;flex:1;">
+                <div class="bb-toolbox-cat">
+                  <div class="bb-toolbox-cat-header" onclick="BotBuilder.toggleCat(this)"><span>Trade Parameters</span><i class="fas fa-chevron-down"></i></div>
+                  <div class="bb-toolbox-items">
+                    <div class="bb-toolbox-item" onclick="BotBuilder.addBlock('trade_params')"><i class="fas fa-sliders-h" style="color:var(--blue);"></i> Trade Parameters</div>
+                    <div class="bb-toolbox-item" onclick="BotBuilder.addBlock('purchase')"><i class="fas fa-shopping-cart" style="color:var(--green);"></i> Purchase Condition</div>
+                    <div class="bb-toolbox-item" onclick="BotBuilder.addBlock('restart')"><i class="fas fa-redo" style="color:var(--purple);"></i> Restart Condition</div>
+                  </div>
+                </div>
+                <div class="bb-toolbox-cat">
+                  <div class="bb-toolbox-cat-header" onclick="BotBuilder.toggleCat(this)"><span>Utility</span><i class="fas fa-chevron-down"></i></div>
+                  <div class="bb-toolbox-items hidden">
+                    <div class="bb-toolbox-item" onclick="BotBuilder.addBlock('notify')"><i class="fas fa-bell" style="color:var(--orange);"></i> Notification</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bb-canvas">
+              <div class="bb-stack" id="bb-stack">
+                <div style="text-align:center;color:var(--text-muted);padding:3rem;">
+                  <i class="fas fa-cubes" style="font-size:2.5rem;margin-bottom:1rem;display:block;opacity:0.3;"></i>
+                  <p>Your strategy workspace is empty.</p>
+                  <p style="font-size:0.8rem;margin-top:0.5rem;">Click blocks from the toolbox to build your bot.</p>
+                </div>
+              </div>
+            </div>
+            <div class="bb-runpanel">
+              <div class="bb-runpanel-tabs">
+                <div class="bb-runpanel-tab active" onclick="BotBuilder.switchTab('summary', this)">Summary</div>
+                <div class="bb-runpanel-tab" onclick="BotBuilder.switchTab('journal', this)">Journal</div>
+                <div class="bb-runpanel-tab" onclick="BotBuilder.switchTab('transactions', this)">Transactions</div>
+              </div>
+              <div class="bb-runpanel-content" id="bb-panel-summary">
+                <div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid var(--border-light);"><span style="color:var(--text-muted);font-size:0.75rem;">Total Stake</span><span style="font-family:var(--font-mono);font-weight:600;" id="bb-sum-stake">0.00</span></div>
+                <div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid var(--border-light);"><span style="color:var(--text-muted);font-size:0.75rem;">Total Payout</span><span style="font-family:var(--font-mono);font-weight:600;" id="bb-sum-payout">0.00</span></div>
+                <div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid var(--border-light);"><span style="color:var(--text-muted);font-size:0.75rem;">Wins</span><span style="font-family:var(--font-mono);font-weight:600;color:var(--green);" id="bb-sum-wins">0</span></div>
+                <div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid var(--border-light);"><span style="color:var(--text-muted);font-size:0.75rem;">Losses</span><span style="font-family:var(--font-mono);font-weight:600;color:var(--red);" id="bb-sum-losses">0</span></div>
+                <div style="display:flex;justify-content:space-between;padding:0.4rem 0;margin-top:0.5rem;"><span style="color:var(--text-muted);font-size:0.75rem;">Net P&L</span><span style="font-family:var(--font-mono);font-weight:600;font-size:1.1rem;" id="bb-sum-pnl">0.00</span></div>
+              </div>
+              <div class="bb-runpanel-content" id="bb-panel-journal" style="display:none;">
+                <div id="bb-journal-log" style="font-family:var(--font-mono);font-size:0.75rem;"></div>
+              </div>
+              <div class="bb-runpanel-content" id="bb-panel-transactions" style="display:none;">
+                <div id="bb-tx-list" style="font-family:var(--font-mono);font-size:0.75rem;"></div>
+              </div>
+            </div>
+            <div class="bb-chartpanel">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem;">
+                <span style="font-size:0.8rem;color:var(--text-muted);"><i class="fas fa-chart-area" style="margin-right:0.4rem;"></i> Chart</span>
+                <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);" id="bb-chart-symbol">R_100</span>
+              </div>
+              <canvas id="bb-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADE PANEL -->
+      <div class="panel" id="panel-trading">
+        <div class="trade-layout">
+          <div class="chart-box">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-size:1.1rem;font-weight:700;" id="trade-symbol-name">Volatility 100</div>
+                <div style="font-size:0.75rem;color:var(--text-muted);font-family:var(--font-mono);" id="trade-symbol-code">R_100</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:var(--font-mono);font-size:1.4rem;font-weight:600;" id="trade-price">--.--</div>
+                <div style="font-size:0.75rem;" id="trade-change">--</div>
+              </div>
+            </div>
+            <canvas id="trade-chart"></canvas>
+          </div>
+          <div class="ticket">
+            <div class="ticket-title"><i class="fas fa-file-contract"></i> Order Ticket</div>
+            <div class="ticket-field"><label>Market</label><select class="form-select" id="ticket-symbol" onchange="Trade.onSymbolChange()"></select></div>
+            <div class="ticket-field"><label>Contract Type</label><select class="form-select" id="ticket-type"><option value="CALL">Rise</option><option value="PUT">Fall</option><option value="DIGITOVER">Over</option><option value="DIGITUNDER">Under</option></select></div>
+            <div class="ticket-row">
+              <div class="ticket-field"><label>Duration</label><input type="number" class="form-input" id="ticket-dur" value="1" min="1"></div>
+              <div class="ticket-field"><label>Unit</label><select class="form-select" id="ticket-dur-unit"><option value="t">Ticks</option><option value="m">Minutes</option></select></div>
+            </div>
+            <div class="ticket-field"><label>Stake (USD)</label><input type="number" class="form-input" id="ticket-stake" value="1.00" min="0.35" step="0.01"></div>
+            <div class="buy-btns">
+              <button class="buy-btn up" onclick="Trade.execute('up')"><i class="fas fa-arrow-up"></i> Buy</button>
+              <button class="buy-btn down" onclick="Trade.execute('down')"><i class="fas fa-arrow-down"></i> Sell</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARKETS -->
+      <div class="panel" id="panel-markets">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+          <div style="font-size:1.1rem;font-weight:700;">All Markets</div>
+          <input type="text" class="form-input" placeholder="Search markets..." style="max-width:300px;" oninput="Markets.filter(this.value)">
+        </div>
+        <div id="markets-container"></div>
+      </div>
+
+      <!-- POSITIONS -->
+      <div class="panel" id="panel-positions">
+        <div style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Open Positions <span style="font-size:0.75rem;color:var(--text-muted);" id="pos-count">(0)</span></div>
+        <div class="pos-grid" id="positions-grid">
+          <div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:3rem;">No open positions</div>
+        </div>
+      </div>
+
+      <!-- HISTORY -->
+      <div class="panel" id="panel-history">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+          <div style="font-size:1.1rem;font-weight:700;">Trading History</div>
+          <button class="btn-deposit" style="background:var(--blue);" onclick="History.exportCSV()"><i class="fas fa-download"></i> Export CSV</button>
+        </div>
+        <div class="card" style="padding:0;overflow:hidden;">
+          <table class="data-table">
+            <thead><tr><th>Time</th><th>ID</th><th>Symbol</th><th>Type</th><th>Stake</th><th>P&L</th><th>Status</th></tr></thead>
+            <tbody id="history-tbody"><tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:2rem;">No closed trades yet</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- JOURNAL -->
+      <div class="panel" id="panel-journal">
+        <div style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Trading Journal</div>
+        <div class="card" style="max-height:70vh;overflow-y:auto;">
+          <div id="journal-content" style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);text-align:center;padding:2rem;">Journal entries appear here</div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="panel" id="panel-settings">
+        <div style="max-width:500px;">
+          <div class="card" style="margin-bottom:1rem;">
+            <div class="card-title">Appearance</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid var(--border-light);">
+              <span style="font-size:0.85rem;">Sound Effects</span>
+              <label class="toggle"><input type="checkbox" id="setting-sound" checked onchange="Settings.toggleSound()"><span class="toggle-slider"></span></label>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0;">
+              <span style="font-size:0.85rem;">Confirm Trades</span>
+              <label class="toggle"><input type="checkbox" id="setting-confirm"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color:var(--red);">Danger Zone</div>
+            <button class="btn-deposit" style="background:var(--red);width:100%;" onclick="Auth.logout()"><i class="fas fa-sign-out-alt"></i> Logout & Clear Session</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER PANELS -->
+      <div class="panel" id="panel-speedbot"><div class="card" style="text-align:center;padding:3rem;"><i class="fas fa-bolt" style="font-size:3rem;color:var(--border);margin-bottom:1rem;"></i><p style="color:var(--text-muted);">Speedbot panel coming soon.</p></div></div>
+      <div class="panel" id="panel-ualed"><div class="card" style="text-align:center;padding:3rem;"><i class="fas fa-code-branch" style="font-size:3rem;color:var(--border);margin-bottom:1rem;"></i><p style="color:var(--text-muted);">Dual Edge panel coming soon.</p></div></div>
+      <div class="panel" id="panel-apex"><div class="card" style="text-align:center;padding:3rem;"><i class="fas fa-globe" style="font-size:3rem;color:var(--border);margin-bottom:1rem;"></i><p style="color:var(--text-muted);">Apex Market panel coming soon.</p></div></div>
+      <div class="panel" id="panel-manual"><div class="card" style="text-align:center;padding:3rem;"><i class="fas fa-hand-pointer" style="font-size:3rem;color:var(--border);margin-bottom:1rem;"></i><p style="color:var(--text-muted);">Manual Trader panel coming soon.</p></div></div>
+      <div class="panel" id="panel-analysis"><div class="card" style="text-align:center;padding:3rem;"><i class="fas fa-chart-bar" style="font-size:3rem;color:var(--border);margin-bottom:1rem;"></i><p style="color:var(--text-muted);">Analysis Tools panel coming soon.</p></div></div>
+      <div class="panel" id="panel-ldp"><div class="card" style="text-align:center;padding:3rem;"><i class="fas fa-hashtag" style="font-size:3rem;color:var(--border);margin-bottom:1rem;"></i><p style="color:var(--text-muted);">LDP Tool panel coming soon.</p></div></div>
+      <div class="panel" id="panel-charts"><div class="card" style="text-align:center;padding:3rem;"><i class="fas fa-chart-area" style="font-size:3rem;color:var(--border);margin-bottom:1rem;"></i><p style="color:var(--text-muted);">Advanced Charts panel coming soon.</p></div></div>
+      <div class="panel" id="panel-copy"><div class="card" style="text-align:center;padding:3rem;"><i class="fas fa-users" style="font-size:3rem;color:var(--border);margin-bottom:1rem;"></i><p style="color:var(--text-muted);">Copy Trading panel coming soon.</p></div></div>
+      <div class="panel" id="panel-reports"><div class="card" style="text-align:center;padding:3rem;"><i class="fas fa-file-alt" style="font-size:3rem;color:var(--border);margin-bottom:1rem;"></i><p style="color:var(--text-muted);">Reports panel coming soon.</p></div></div>
+
+    </div>
+  </div>
+
+  <!-- BOTTOM RUN BAR (dbtraders style) -->
+  <div class="run-bar" id="run-bar">
+    <button class="run-btn" id="run-bar-btn" onclick="BotBuilder.run()"><i class="fas fa-play"></i> Run</button>
+    <div class="run-status" id="run-bar-status">Bot is not running</div>
+    <div class="run-time" id="run-bar-time">2026-05-13 00:00:00 GMT</div>
+    <div class="run-controls">
+      <button onclick="UI.notify('Settings')"><i class="fas fa-cog"></i></button>
+      <button onclick="UI.notify('Language')"><i class="fas fa-globe"></i></button>
+      <button onclick="UI.toggleFullscreen()"><i class="fas fa-expand"></i></button>
+    </div>
+  </div>
+
+  <!-- RISK DISCLAIMER -->
+  <div class="risk-banner"><i class="fas fa-exclamation-triangle"></i> Risk Disclaimer — Trading involves real financial risk. Please trade responsibly.</div>
+
+  <!-- AI ASSISTANT -->
+  <button class="ai-assistant" onclick="AI.toggle()">
+    <i class="fas fa-robot"></i>
+    <span class="ai-label">AI</span>
+  </button>
+
+  <!-- AI CHAT PANEL -->
+  <div id="ai-panel" style="display:none;position:fixed;bottom:5rem;right:1.5rem;width:340px;height:420px;background:var(--surface);border:1px solid var(--border-light);border-radius:var(--radius);box-shadow:var(--shadow-lg);z-index:199;flex-direction:column;overflow:hidden;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:0.8rem 1rem;background:linear-gradient(135deg,#7b1fa2,#a855f7);color:#fff;">
+      <span style="font-weight:700;font-size:0.9rem;"><i class="fas fa-robot" style="margin-right:0.4rem;"></i> KimHub AI</span>
+      <button onclick="AI.toggle()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:1rem;"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="ai-messages" style="flex:1;overflow-y:auto;padding:0.8rem;display:flex;flex-direction:column;gap:0.5rem;font-size:0.82rem;">
+      <div style="background:#f3e5f5;border-radius:8px;padding:0.6rem;color:var(--text);align-self:flex-start;max-width:85%;">Hello! I'm your KimHub AI assistant. Ask me about trading strategies, bot setup, or market analysis.</div>
+    </div>
+    <div style="display:flex;gap:0.4rem;padding:0.6rem;border-top:1px solid var(--border-light);">
+      <input type="text" id="ai-input" placeholder="Ask AI..." style="flex:1;padding:0.4rem 0.6rem;border:1px solid var(--border);border-radius:6px;font-size:0.8rem;outline:none;" onkeypress="if(event.key==='Enter')AI.send()">
+      <button onclick="AI.send()" style="background:var(--purple);color:#fff;border:none;padding:0 0.8rem;border-radius:6px;cursor:pointer;"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CORE STATE
+   ═══════════════════════════════════════════════════════════════ */
+const APP_ID = 1089;
+const WS_URL = `wss://ws.binaryws.com/websockets/v3?app_id=${APP_ID}`;
+
+const App = {
+  state: {
+    authenticated: false, isDemo: false, token: null,
+    balance: 0, currency: 'USD', loginid: '', email: '', fullname: 'Trader', isVirtual: true,
+    todayPnl: 0, wins: 0, losses: 0, openContracts: [], history: [], savedAccounts: [], soundEnabled: true
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   WEBSOCKET
+   ═══════════════════════════════════════════════════════════════ */
+const WS = {
+  socket: null, connected: false, listeners: {}, queue: [],
+  connect() {
+    if (this.socket && (this.socket.readyState === WebSocket.CONNECTING || this.socket.readyState === WebSocket.OPEN)) return;
+    this.socket = new WebSocket(WS_URL);
+    this.socket.onopen = () => {
+      this.connected = true;
+      while (this.queue.length) this.send(this.queue.shift());
+      if (App.state.token) this.send({ authorize: App.state.token });
+      else if (App.state.isDemo) Markets.loadAll();
+    };
+    this.socket.onmessage = (e) => this.handle(JSON.parse(e.data));
+    this.socket.onclose = () => { this.connected = false; setTimeout(() => this.connect(), 3000); };
+  },
+  send(msg) { if (!this.connected || !this.socket || this.socket.readyState !== WebSocket.OPEN) { this.queue.push(msg); return; } this.socket.send(JSON.stringify(msg)); },
+  on(event, cb) { if (!this.listeners[event]) this.listeners[event] = []; this.listeners[event].push(cb); },
+  handle(data) {
+    if (data.error) { UI.notify(data.error.message, 'error'); return; }
+    const type = Object.keys(data).find(k => !['echo_req','req_id','subscription'].includes(k));
+    if (this.listeners[type]) this.listeners[type].forEach(cb => cb(data[type], data));
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   AUTHENTICATION
+   ═══════════════════════════════════════════════════════════════ */
+const Auth = {
+  init() { const saved = localStorage.getItem('kht_accounts'); if (saved) App.state.savedAccounts = JSON.parse(saved); this.renderSaved(); },
+  showModal() { document.getElementById('auth-modal').classList.add('active'); document.getElementById('auth-token-input').focus(); },
+  hideModal() { document.getElementById('auth-modal').classList.remove('active'); document.getElementById('auth-error').textContent = ''; },
+  login() {
+    const token = document.getElementById('auth-token-input').value.trim();
+    if (!token) { document.getElementById('auth-error').textContent = 'Enter a valid API token'; return; }
+    this.setLoading(true);
+    App.state.token = token; App.state.isDemo = false;
+    WS.connect(); setTimeout(() => WS.send({ authorize: token }), 500);
+    setTimeout(() => { if (!App.state.authenticated) { this.setLoading(false); document.getElementById('auth-error').textContent = 'Connection timeout.'; } }, 6000);
+  },
+  setLoading(v) {
+    document.getElementById('auth-btn').disabled = v;
+    document.getElementById('auth-spinner').style.display = v ? 'block' : 'none';
+    document.getElementById('auth-btn-text').textContent = v ? 'Connecting...' : 'Connect Account';
+    document.getElementById('auth-btn-icon').style.display = v ? 'none' : 'inline-block';
+  },
+  enterDemo() {
+    App.state.isDemo = true; App.state.authenticated = true; App.state.balance = 10000; App.state.currency = 'USD';
+    App.state.loginid = 'VRTC-DEMO'; App.state.isVirtual = true; App.state.fullname = 'Demo Trader';
+    this.hideModal(); document.getElementById('entry-gate').classList.add('hidden'); UI.showApp(); UI.updateAccount();
+    Markets.loadAll(); WS.connect(); UI.notify('Demo mode active. Trades simulated with real market data.');
+  },
+  logout() {
+    App.state.authenticated = false; App.state.isDemo = false; App.state.token = null; App.state.balance = 0;
+    App.state.openContracts = []; App.state.history = []; App.state.todayPnl = 0; App.state.wins = 0; App.state.losses = 0;
+    if (WS.socket) WS.socket.close();
+    document.getElementById('app-shell').classList.remove('active'); document.getElementById('entry-gate').classList.remove('hidden');
+    UI.updateAccount(); UI.renderPositions(); UI.renderHistory(); UI.renderDashboard(); BotBuilder.stop();
+  },
+  saveAccount(token, auth) {
+    const exists = App.state.savedAccounts.find(a => a.token === token);
+    if (!exists) { App.state.savedAccounts.push({ token, loginid: auth.loginid, currency: auth.currency, isVirtual: auth.is_virtual, name: auth.fullname || auth.email || 'Account' }); localStorage.setItem('kht_accounts', JSON.stringify(App.state.savedAccounts)); this.renderSaved(); }
+  },
+  renderSaved() {
+    const wrap = document.getElementById('saved-accounts-wrap'), list = document.getElementById('saved-accounts-list');
+    if (!App.state.savedAccounts.length) { wrap.style.display = 'none'; return; }
+    wrap.style.display = 'block';
+    list.innerHTML = App.state.savedAccounts.map(a => `
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#091509;border:1px solid #1a3a1a;border-radius:6px;padding:0.5rem 0.7rem;margin-bottom:0.4rem;cursor:pointer;" onclick="Auth.useSaved('${a.token}')">
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <div style="width:28px;height:28px;border-radius:50%;background:${a.isVirtual?'linear-gradient(135deg,#f59e0b,#d97706)':'linear-gradient(135deg,#10b981,#059669)'};display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;font-weight:700;">${a.name.charAt(0).toUpperCase()}</div>
+          <div><div style="font-size:0.78rem;font-weight:600;color:#c8e6c9;">${a.name}</div><div style="font-size:0.65rem;color:#4a7a4a;font-family:monospace;">${a.loginid}</div></div>
+        </div>
+        <button onclick="event.stopPropagation();Auth.removeSaved('${a.token}')" style="background:none;border:none;color:#4a7a4a;cursor:pointer;font-size:0.8rem;"><i class="fas fa-times"></i></button>
+      </div>
+    `).join('');
+  },
+  useSaved(token) { document.getElementById('auth-token-input').value = token; this.login(); },
+  removeSaved(token) { App.state.savedAccounts = App.state.savedAccounts.filter(a => a.token !== token); localStorage.setItem('kht_accounts', JSON.stringify(App.state.savedAccounts)); this.renderSaved(); },
+  toggleDropdown() { document.getElementById('acc-dropdown').classList.toggle('show'); }
+};
+
+WS.on('authorize', (auth) => {
+  App.state.authenticated = true; App.state.currency = auth.currency || 'USD'; App.state.loginid = auth.loginid;
+  App.state.isVirtual = auth.is_virtual; App.state.balance = auth.balance; App.state.email = auth.email;
+  App.state.fullname = auth.fullname || auth.email || 'Trader'; Auth.saveAccount(App.state.token, auth);
+  Auth.hideModal(); document.getElementById('entry-gate').classList.add('hidden'); UI.showApp(); UI.updateAccount();
+  WS.send({ balance: 1, subscribe: 1 }); WS.send({ transaction: 1, subscribe: 1 }); WS.send({ account_list: 1 });
+  Markets.loadAll(); UI.notify(`Authorized as ${auth.loginid}`);
+});
+
+WS.on('balance', (bal) => { App.state.balance = parseFloat(bal.balance); UI.updateBalance(); });
+
+WS.on('account_list', (list) => {
+  const conn = document.getElementById('acc-connected-list');
+  const other = document.getElementById('acc-other-list');
+  if (!list || !list.length) return;
+  const current = list.find(a => a.loginid === App.state.loginid);
+  const others = list.filter(a => a.loginid !== App.state.loginid);
+  if (current) {
+    conn.innerHTML = `<div class="acc-card active">
+      <div class="acc-card-icon ${current.is_virtual?'demo':'real'}">${current.currency.charAt(0)}</div>
+      <div class="acc-card-info"><div class="acc-card-type">${current.currency} Wallet</div><div class="acc-card-name">${current.loginid}</div></div>
+      <div class="acc-card-balance">${App.state.balance.toFixed(2)}</div>
+    </div>`;
+  }
+  other.innerHTML = others.map(a => `<div class="acc-card" onclick="UI.notify('Connect with token for ${a.loginid}')">
+    <div class="acc-card-icon ${a.is_virtual?'demo':'real'}">${a.currency.charAt(0)}</div>
+    <div class="acc-card-info"><div class="acc-card-type">${a.currency} Wallet</div><div class="acc-card-name">${a.loginid}</div></div>
+  </div>`).join('');
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   MARKETS
+   ═══════════════════════════════════════════════════════════════ */
+const Markets = {
+  symbols: [], categories: {}, activeSymbol: 'R_100', ticks: {}, tickHistory: {},
+  loadAll() { WS.send({ active_symbols: 'brief', product_type: 'basic' }); },
+  handleSymbols(data) {
+    this.symbols = (data.active_symbols || []).filter(s => s.exchange_is_open !== 0);
+    this.categories = {};
+    const catMap = { synthetic_index: { name: 'Derived Indices', icon: 'fa-bolt' }, forex: { name: 'Forex', icon: 'fa-exchange-alt' }, indices: { name: 'Stock Indices', icon: 'fa-chart-bar' }, commodities: { name: 'Commodities', icon: 'fa-coins' } };
+    this.symbols.forEach(s => { const key = s.market; if (!this.categories[key]) this.categories[key] = { ...catMap[key], items: [] }; this.categories[key].items.push(s); });
+    this.populateSelects(); UI.renderMarkets(); this.subscribe(this.activeSymbol);
+  },
+  populateSelects() {
+    const opts = Object.values(this.categories).map(c => `<optgroup label="${c.name}">${c.items.map(s => `<option value="${s.symbol}" ${s.symbol===this.activeSymbol?'selected':''}>${s.display_name}</option>`).join('')}</optgroup>`).join('');
+    ['ticket-symbol'].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = opts; });
+  },
+  subscribe(symbol) { if (!symbol) return; this.activeSymbol = symbol; WS.send({ forget_all: 'ticks' }); WS.send({ ticks: symbol, subscribe: 1 }); WS.send({ ticks_history: symbol, adjust_start_time: 1, count: 100, end: 'latest', start: 1, style: 'ticks' }); },
+  handleTick(tick) {
+    if (!tick || !tick.quote) return;
+    const sym = tick.symbol, price = tick.quote, prev = this.ticks[sym] ? this.ticks[sym].price : price;
+    this.ticks[sym] = { price, epoch: tick.epoch, prev };
+    if (!this.tickHistory[sym]) this.tickHistory[sym] = [];
+    this.tickHistory[sym].push({ price, epoch: tick.epoch });
+    if (this.tickHistory[sym].length > 300) this.tickHistory[sym].shift();
+    if (sym === this.activeSymbol) {
+      document.getElementById('trade-price').textContent = price.toFixed(tick.pip_size || 2);
+      const change = price - prev;
+      document.getElementById('trade-change').innerHTML = `<span style="color:${change>=0?'var(--green)':'var(--red)'}">${change>=0?'+':''}${change.toFixed(tick.pip_size||2)}</span>`;
+      Charts.drawTradeChart(this.tickHistory[sym]);
+      document.getElementById('bb-chart-symbol').textContent = sym;
+      Charts.drawBotChart(this.tickHistory[sym]);
+    }
+  },
+  filter(term) { const t = term.toLowerCase(); document.querySelectorAll('.market-item').forEach(el => { el.style.display = el.textContent.toLowerCase().includes(t) ? 'flex' : 'none'; }); }
+};
+
+WS.on('active_symbols', (d) => Markets.handleSymbols(d));
+WS.on('tick', (d) => Markets.handleTick(d));
+WS.on('history', (d) => { if (d && d.prices && d.times) { const sym = d.echo_req.ticks_history; Markets.tickHistory[sym] = d.prices.map((p,i) => ({ price: p, epoch: d.times[i] })); if (sym === Markets.activeSymbol) { Charts.drawTradeChart(Markets.tickHistory[sym]); Charts.drawBotChart(Markets.tickHistory[sym]); } } });
+
+/* ═══════════════════════════════════════════════════════════════
+   TRADE ENGINE
+   ═══════════════════════════════════════════════════════════════ */
+const Trade = {
+  currentProposal: null, pendingDirection: null,
+  onSymbolChange() { const sym = document.getElementById('ticket-symbol').value; Markets.subscribe(sym); const s = Markets.symbols.find(x => x.symbol === sym); document.getElementById('trade-symbol-name').textContent = s ? s.display_name : sym; document.getElementById('trade-symbol-code').textContent = sym; },
+  execute(direction) {
+    if (!App.state.authenticated) { UI.notify('Connect or enter demo mode first'); return; }
+    const symbol = document.getElementById('ticket-symbol').value;
+    const duration = parseInt(document.getElementById('ticket-dur').value) || 1;
+    const durationUnit = document.getElementById('ticket-dur-unit').value;
+    const stake = parseFloat(document.getElementById('ticket-stake').value) || 0.35;
+    let contractType = document.getElementById('ticket-type').value;
+    if (direction === 'up' && (contractType === 'CALL' || contractType === 'PUT')) contractType = 'CALL';
+    else if (direction === 'down' && (contractType === 'CALL' || contractType === 'PUT')) contractType = 'PUT';
+    const req = { proposal: 1, amount: stake, basis: 'stake', contract_type: contractType, currency: App.state.currency, duration: duration, duration_unit: durationUnit, symbol: symbol };
+    this.pendingDirection = direction; this.currentProposal = null; WS.send(req); UI.notify('Requesting proposal...');
+  },
+  handleProposal(proposal) {
+    if (!proposal || !proposal.id) { UI.notify('Proposal failed'); return; }
+    this.currentProposal = proposal;
+    if (App.state.isDemo) { this.simulateContract(proposal); return; }
+    WS.send({ buy: proposal.id, price: proposal.ask_price });
+  },
+  handleBuy(buy) {
+    if (!buy || !buy.contract_id) { UI.notify('Purchase failed'); return; }
+    const contract = { id: buy.contract_id, symbol: buy.symbol || Markets.activeSymbol, type: buy.contract_type || this.currentProposal?.contract_type || 'Unknown', stake: parseFloat(buy.buy_price || this.currentProposal?.ask_price || 0), entryPrice: Markets.ticks[Markets.activeSymbol]?.price || 0, entryTime: Date.now(), status: 'OPEN', longcode: buy.longcode || '' };
+    App.state.openContracts.push(contract);
+    WS.send({ proposal_open_contract: 1, contract_id: buy.contract_id, subscribe: 1 });
+    UI.renderPositions(); UI.updateDashboard(); UI.notify(`Contract #${buy.contract_id} purchased`);
+  },
+  handleContractUpdate(poc) {
+    const c = App.state.openContracts.find(x => x.id === poc.contract_id);
+    if (!c) return;
+    c.profit = parseFloat(poc.profit || 0); c.status = (poc.is_expired || poc.is_sold) ? 'CLOSED' : 'OPEN';
+    if (c.status === 'CLOSED') {
+      App.state.openContracts = App.state.openContracts.filter(x => x.id !== c.id);
+      App.state.todayPnl += c.profit; App.state.history.unshift({ time: new Date().toLocaleString(), id: c.id, symbol: c.symbol, type: c.type, stake: c.stake, entry: c.entryPrice, exit: 0, profit: c.profit, status: c.profit >= 0 ? 'WON' : 'LOST' });
+      if (c.profit >= 0) App.state.wins++; else App.state.losses++;
+      UI.renderPositions(); UI.renderHistory(); UI.updateDashboard(); UI.notify(`${c.profit >= 0 ? 'WIN' : 'LOSS'}: ${c.profit >= 0 ? '+' : ''}${c.profit.toFixed(2)}`);
+    } else {
+      const plEl = document.getElementById(`pos-pl-${c.id}`);
+      if (plEl) { plEl.textContent = (c.profit >= 0 ? '+' : '') + c.profit.toFixed(2); plEl.className = 'pos-pl ' + (c.profit >= 0 ? 'green' : 'red'); }
+    }
+  },
+  simulateContract(proposal) {
+    const cfg = { symbol: proposal.echo_req.symbol, contract_type: proposal.echo_req.contract_type, duration: proposal.echo_req.duration, duration_unit: proposal.echo_req.duration_unit, stake: proposal.echo_req.amount };
+    const entryPrice = Markets.ticks[cfg.symbol]?.price || 0;
+    const fakeId = 'DEMO-' + Date.now();
+    const contract = { id: fakeId, symbol: cfg.symbol, type: cfg.contract_type, stake: cfg.stake, entryPrice, entryTime: Date.now(), status: 'OPEN', profit: 0, longcode: `[DEMO] ${cfg.contract_type} ${cfg.symbol}` };
+    App.state.openContracts.push(contract); UI.renderPositions(); UI.notify('[DEMO] Contract opened');
+    setTimeout(() => {
+      const hist = Markets.tickHistory[cfg.symbol]; const exitTick = hist && hist.length > 0 ? hist[hist.length - 1] : { price: entryPrice };
+      let isWin = Math.random() > 0.45;
+      const profit = isWin ? (cfg.stake * 0.88) : -cfg.stake;
+      contract.profit = profit; contract.status = 'CLOSED';
+      App.state.openContracts = App.state.openContracts.filter(x => x.id !== fakeId);
+      App.state.todayPnl += profit; App.state.history.unshift({ time: new Date().toLocaleString(), id: fakeId, symbol: cfg.symbol, type: cfg.contract_type, stake: cfg.stake, entry: entryPrice, exit: 0, profit, status: isWin ? 'WON' : 'LOST' });
+      if (isWin) App.state.wins++; else App.state.losses++;
+      UI.renderPositions(); UI.renderHistory(); UI.updateDashboard(); UI.notify(`[DEMO] ${isWin ? 'WIN' : 'LOSS'} ${profit >= 0 ? '+' : ''}${profit.toFixed(2)}`);
+    }, 3000);
+  }
+};
+
+WS.on('proposal', (d) => Trade.handleProposal(d));
+WS.on('buy', (d) => Trade.handleBuy(d));
+WS.on('proposal_open_contract', (d) => Trade.handleContractUpdate(d));
+
+/* ═══════════════════════════════════════════════════════════════
+   BOT EDITOR
+   ═══════════════════════════════════════════════════════════════ */
+const BotEditor = {
+  switchTab(tab, el) { document.querySelectorAll('.rp-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); document.querySelectorAll('.rp-content').forEach(c => c.style.display = 'none'); document.getElementById('rp-' + tab).style.display = 'block'; },
+  loadQuick() { UI.switchTab('botbuilder'); BotBuilder.loadQuick('martingale'); },
+  resetStats() { document.getElementById('rp-stake').textContent = '0.00 USD'; document.getElementById('rp-payout').textContent = '0.00 USD'; document.getElementById('rp-lost').textContent = '0'; document.getElementById('rp-won').textContent = '0'; document.getElementById('rp-pnl').textContent = '0.00 USD'; UI.notify('Stats reset'); }
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   BOT BUILDER
+   ═══════════════════════════════════════════════════════════════ */
+const BotBuilder = {
+  running: false, stats: { stake: 0, payout: 0, wins: 0, losses: 0, pnl: 0 }, blocks: [], timer: null,
+  toggleCat(el) { const items = el.nextElementSibling; if (items) { items.classList.toggle('hidden'); el.classList.toggle('collapsed'); } },
+  filterBlocks(term) { const t = term.toLowerCase(); document.querySelectorAll('.bb-toolbox-item').forEach(item => { item.style.display = item.textContent.toLowerCase().includes(t) ? 'flex' : 'none'; }); },
+  switchTab(tab, el) { document.querySelectorAll('.bb-runpanel-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); document.querySelectorAll('.bb-runpanel-content').forEach(c => c.style.display = 'none'); document.getElementById('bb-panel-' + tab).style.display = 'block'; },
+  addBlock(type) {
+    const stack = document.getElementById('bb-stack');
+    if (stack.children.length === 1 && stack.children[0].querySelector('.fa-cubes')) stack.innerHTML = '';
+    const block = document.createElement('div'); block.className = 'bb-block'; block.id = 'block-' + Date.now();
+    const headers = { trade_params: ['blue','fa-sliders-h','Trade Parameters'], purchase: ['green','fa-shopping-cart','Purchase Condition'], restart: ['purple','fa-redo','Restart Condition'], notify: ['orange','fa-bell','Notification'] };
+    const h = headers[type] || ['blue','fa-cube','Block'];
+    block.innerHTML = `<div class="bb-block-header ${h[0]}"><i class="fas ${h[1]}"></i> ${h[2]}<button style="margin-left:auto;background:none;border:none;color:#fff;cursor:pointer;font-size:0.8rem;" onclick="this.closest('.bb-block').remove()"><i class="fas fa-times"></i></button></div><div class="bb-block-body" id="${block.id}-body"></div>`;
+    const body = block.querySelector('.bb-block-body');
+    if (type === 'trade_params') {
+      body.innerHTML = `<div class="bb-field"><label>Symbol</label><select class="bb-field-select" id="${block.id}-sym">${document.getElementById('ticket-symbol').innerHTML}</select></div>
+      <div class="bb-field"><label>Contract</label><select class="bb-field-select" id="${block.id}-type"><option value="CALL">Rise</option><option value="PUT">Fall</option></select></div>
+      <div class="bb-field"><label>Stake</label><input type="number" class="bb-field-input" value="1.00" id="${block.id}-stake"></div>`;
+    } else if (type === 'restart') {
+      body.innerHTML = `<div class="bb-field"><label>Max Loss</label><input type="number" class="bb-field-input" value="5.00" id="${block.id}-sl"></div>
+      <div class="bb-field"><label>Take Profit</label><input type="number" class="bb-field-input" value="10.00" id="${block.id}-tp"></div>`;
+    }
+    stack.appendChild(block); this.blocks.push({ id: block.id, type });
+  },
+  loadQuick(strategy) {
+    document.getElementById('bb-stack').innerHTML = ''; this.blocks = [];
+    this.addBlock('trade_params'); this.addBlock('purchase'); this.addBlock('restart');
+    this.log(`Loaded quick strategy: ${strategy}`, 'info');
+  },
+  run() {
+    if (this.running) return; if (!App.state.authenticated) { UI.notify('Connect or enter demo mode first'); return; }
+    this.running = true;
+    document.getElementById('bb-run-btn').style.display = 'none'; document.getElementById('bb-stop-btn').style.display = 'inline-flex';
+    document.getElementById('run-bar-btn').innerHTML = '<i class="fas fa-stop"></i> Stop'; document.getElementById('run-bar-btn').onclick = () => this.stop();
+    document.getElementById('bb-status').innerHTML = '<span class="status-dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;box-shadow:0 0 8px var(--green);"></span> Bot is running...'; document.getElementById('bb-status').classList.add('running');
+    document.getElementById('run-bar-status').textContent = 'Bot is running'; document.getElementById('run-bar-status').classList.add('running');
+    this.log('Bot started', 'info'); this.executeLoop();
+  },
+  stop() {
+    this.running = false; if (this.timer) clearTimeout(this.timer);
+    document.getElementById('bb-run-btn').style.display = 'inline-flex'; document.getElementById('bb-stop-btn').style.display = 'none';
+    document.getElementById('run-bar-btn').innerHTML = '<i class="fas fa-play"></i> Run'; document.getElementById('run-bar-btn').onclick = () => this.run();
+    document.getElementById('bb-status').innerHTML = '<span class="status-dot" style="width:8px;height:8px;border-radius:50%;background:var(--text-muted);display:inline-block;"></span> Bot is not running'; document.getElementById('bb-status').classList.remove('running');
+    document.getElementById('run-bar-status').textContent = 'Bot is not running'; document.getElementById('run-bar-status').classList.remove('running');
+    this.log('Bot stopped', 'info');
+  },
+  reset() { this.stop(); document.getElementById('bb-stack').innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:3rem;"><i class="fas fa-cubes" style="font-size:2.5rem;margin-bottom:1rem;display:block;opacity:0.3;"></i><p>Your strategy workspace is empty.</p></div>'; this.blocks = []; this.resetStats(); this.log('Workspace reset', 'info'); },
+  executeLoop() {
+    if (!this.running) return;
+    const tp = this.blocks.find(b => b.type === 'trade_params');
+    if (!tp) { this.log('No Trade Parameters block', 'loss'); this.stop(); return; }
+    const sym = document.getElementById(tp.id + '-sym')?.value || 'R_100';
+    const type = document.getElementById(tp.id + '-type')?.value || 'CALL';
+    const stake = parseFloat(document.getElementById(tp.id + '-stake')?.value) || 0.35;
+    Markets.subscribe(sym);
+    WS.send({ proposal: 1, amount: stake, basis: 'stake', contract_type: type, currency: App.state.currency, duration: 1, duration_unit: 't', symbol: sym });
+    this.log(`Proposal: ${type} ${sym} @ ${stake}`, 'info');
+    this.timer = setTimeout(() => this.executeLoop(), 3000);
+  },
+  handleBotProposal(proposal) {
+    if (!this.running || !proposal || !proposal.id) return;
+    if (App.state.isDemo) { Trade.simulateContract(proposal); this.updateBotStats(proposal); return; }
+    WS.send({ buy: proposal.id, price: proposal.ask_price }); this.updateBotStats(proposal);
+  },
+  updateBotStats(proposal) {
+    this.stats.stake += parseFloat(proposal.ask_price || 0); this.stats.payout += parseFloat(proposal.payout || 0);
+    document.getElementById('bb-sum-stake').textContent = this.stats.stake.toFixed(2);
+    document.getElementById('bb-sum-payout').textContent = this.stats.payout.toFixed(2);
+    document.getElementById('rp-stake').textContent = this.stats.stake.toFixed(2) + ' USD';
+    document.getElementById('rp-payout').textContent = this.stats.payout.toFixed(2) + ' USD';
+  },
+  updateBotResult(profit) {
+    this.stats.pnl += profit; if (profit >= 0) this.stats.wins++; else this.stats.losses++;
+    document.getElementById('bb-sum-wins').textContent = this.stats.wins; document.getElementById('bb-sum-losses').textContent = this.stats.losses;
+    document.getElementById('rp-won').textContent = this.stats.wins; document.getElementById('rp-lost').textContent = this.stats.losses;
+    const total = this.stats.wins + this.stats.losses;
+    document.getElementById('bb-sum-winrate').textContent = total > 0 ? Math.round((this.stats.wins/total)*100) + '%' : '0%';
+    const pnlEl = document.getElementById('bb-sum-pnl'); pnlEl.textContent = (this.stats.pnl >= 0 ? '+' : '') + this.stats.pnl.toFixed(2); pnlEl.style.color = this.stats.pnl >= 0 ? 'var(--green)' : 'var(--red)';
+    document.getElementById('rp-pnl').textContent = (this.stats.pnl >= 0 ? '+' : '') + this.stats.pnl.toFixed(2) + ' USD'; document.getElementById('rp-pnl').style.color = this.stats.pnl >= 0 ? 'var(--green)' : 'var(--red)';
+    this.log(`${profit >= 0 ? 'WIN' : 'LOSS'} ${profit >= 0 ? '+' : ''}${profit.toFixed(2)}`, profit >= 0 ? 'win' : 'loss');
+  },
+  resetStats() { this.stats = { stake: 0, payout: 0, wins: 0, losses: 0, pnl: 0 }; document.getElementById('bb-sum-stake').textContent = '0.00'; document.getElementById('bb-sum-payout').textContent = '0.00'; document.getElementById('bb-sum-wins').textContent = '0'; document.getElementById('bb-sum-losses').textContent = '0'; document.getElementById('bb-sum-winrate').textContent = '0%'; document.getElementById('bb-sum-pnl').textContent = '0.00'; document.getElementById('bb-sum-pnl').style.color = 'var(--text)'; document.getElementById('rp-stake').textContent = '0.00 USD'; document.getElementById('rp-payout').textContent = '0.00 USD'; document.getElementById('rp-won').textContent = '0'; document.getElementById('rp-lost').textContent = '0'; document.getElementById('rp-pnl').textContent = '0.00 USD'; document.getElementById('rp-pnl').style.color = 'var(--text)'; },
+  log(msg, type = 'info') {
+    const log = document.getElementById('bb-journal-log');
+    if (!log.innerHTML || log.textContent.includes('Journal is empty')) log.innerHTML = '';
+    const entry = document.createElement('div'); entry.style.cssText = 'padding:0.2rem 0;border-bottom:1px solid var(--border-light);font-family:var(--font-mono);font-size:0.75rem;';
+    entry.innerHTML = `<span style="color:var(--text-muted);font-size:0.65rem;">${new Date().toLocaleTimeString()}</span> <span style="color:${type==='win'?'var(--green)':type==='loss'?'var(--red)':'var(--text-secondary)'};font-weight:${type==='win'||type==='loss'?700:400};">${msg}</span>`;
+    log.appendChild(entry); log.scrollTop = log.scrollHeight;
+  }
+};
+
+const origHandleBuy = Trade.handleBuy.bind(Trade);
+Trade.handleBuy = function(buy) { origHandleBuy(buy); if (BotBuilder.running) BotBuilder.log(`BUY Contract #${buy.contract_id}`, 'buy'); };
+const origHandleContract = Trade.handleContractUpdate.bind(Trade);
+Trade.handleContractUpdate = function(poc) { const wasOpen = App.state.openContracts.find(x => x.id === poc.contract_id); origHandleContract(poc); if (BotBuilder.running && wasOpen && wasOpen.status === 'OPEN' && (poc.is_expired || poc.is_sold)) BotBuilder.updateBotResult(wasOpen.profit); };
+
+WS.on('proposal', (d) => BotBuilder.handleBotProposal(d));
+
+/* ═══════════════════════════════════════════════════════════════
+   CHARTS
+   ═══════════════════════════════════════════════════════════════ */
+const Charts = {
+  drawTradeChart(ticks) {
+    const canvas = document.getElementById('trade-chart');
+    if (!canvas || !ticks || ticks.length < 2) return;
+    const ctx = canvas.getContext('2d'), w = canvas.width = canvas.offsetWidth, h = canvas.height = canvas.offsetHeight;
+    ctx.clearRect(0, 0, w, h);
+    const prices = ticks.map(t => t.price), min = Math.min(...prices), max = Math.max(...prices), range = max - min || 1, pad = 20;
+    ctx.strokeStyle = '#e8eaed'; ctx.lineWidth = 1;
+    for (let i = 1; i < 5; i++) { const y = pad + (i/5)*(h-pad*2); ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(w-pad,y); ctx.stroke(); }
+    const grad = ctx.createLinearGradient(0,0,0,h); grad.addColorStop(0,'rgba(0,167,158,0.12)'); grad.addColorStop(1,'rgba(0,167,158,0.02)');
+    ctx.fillStyle = grad; ctx.beginPath();
+    ticks.forEach((t,i) => { const x = pad+(i/(ticks.length-1))*(w-pad*2), y = h-pad-((t.price-min)/range)*(h-pad*2); if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); });
+    ctx.lineTo(w-pad,h-pad); ctx.lineTo(pad,h-pad); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = '#00a79e'; ctx.lineWidth = 2; ctx.beginPath();
+    ticks.forEach((t,i) => { const x = pad+(i/(ticks.length-1))*(w-pad*2), y = h-pad-((t.price-min)/range)*(h-pad*2); if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); });
+    ctx.stroke();
+  },
+  drawBotChart(ticks) {
+    const canvas = document.getElementById('bb-chart');
+    if (!canvas || !ticks || ticks.length < 2) return;
+    const ctx = canvas.getContext('2d'), w = canvas.width = canvas.offsetWidth, h = canvas.height = canvas.offsetHeight;
+    ctx.clearRect(0,0,w,h);
+    const prices = ticks.map(t => t.price), min = Math.min(...prices), max = Math.max(...prices), range = max - min || 1, pad = 10;
+    ctx.strokeStyle = '#00a79e'; ctx.lineWidth = 1.5; ctx.beginPath();
+    ticks.forEach((t,i) => { const x = pad+(i/(ticks.length-1))*(w-pad*2), y = h-pad-((t.price-min)/range)*(h-pad*2); if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); });
+    ctx.stroke();
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   UI CONTROLLER
+   ═══════════════════════════════════════════════════════════════ */
+const UI = {
+  showApp() { document.getElementById('app-shell').classList.add('active'); },
+  switchTab(name, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.sub-nav-link').forEach(i => i.classList.remove('active'));
+    if (el) { el.classList.add('active'); } else {
+      const sub = document.querySelector(`.sub-nav-link[onclick*="'${name}'"]`);
+      if (sub) sub.classList.add('active');
+      const side = document.querySelector(`.sidebar-item[onclick*="'${name}'"]`);
+      if (side) side.classList.add('active');
+    }
+  },
+  updateAccount() {
+    document.getElementById('sidebar-name').textContent = App.state.fullname.split(' ')[0] || 'Trader';
+    document.getElementById('sidebar-id').textContent = App.state.loginid || 'Disconnected';
+    document.getElementById('sidebar-avatar').textContent = (App.state.fullname || 'T').charAt(0).toUpperCase();
+    this.updateBalance();
+  },
+  updateBalance() {
+    const bal = App.state.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById('header-balance').textContent = bal + ' ' + App.state.currency;
+    document.getElementById('dash-wallet-balance').textContent = bal;
+    document.getElementById('dash-wallet-label').textContent = (App.state.isVirtual || App.state.isDemo ? 'Demo' : 'Real') + ' ' + App.state.currency + ' wallet';
+    document.getElementById('header-badge').textContent = App.state.isVirtual || App.state.isDemo ? 'Demo' : 'Real';
+    document.getElementById('header-badge').className = 'acc-badge ' + (App.state.isVirtual || App.state.isDemo ? 'demo' : 'real');
+  },
+  updateDashboard() {
+    const total = App.state.wins + App.state.losses;
+    const winRate = total > 0 ? Math.round((App.state.wins / total) * 100) : 0;
+    const pnlEl = document.getElementById('dash-pnl');
+    pnlEl.textContent = (App.state.todayPnl >= 0 ? '+' : '') + App.state.todayPnl.toFixed(2);
+    pnlEl.className = 'stat-value ' + (App.state.todayPnl >= 0 ? 'positive' : 'negative');
+    document.getElementById('dash-winrate').textContent = winRate + '%';
+    document.getElementById('dash-open').textContent = App.state.openContracts.length;
+  },
+  renderPositions() {
+    const grid = document.getElementById('positions-grid');
+    document.getElementById('pos-count').textContent = `(${App.state.openContracts.length})`;
+    if (!App.state.openContracts.length) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:3rem;">No open positions</div>'; return; }
+    grid.innerHTML = App.state.openContracts.map(c => `<div class="pos-card"><div style="display:flex;justify-content:space-between;align-items:center;"><div><div style="font-weight:700;">${c.symbol}</div><div style="font-size:0.7rem;color:var(--text-muted);">${c.type} • ${c.stake.toFixed(2)}</div></div><span class="badge badge-open">OPEN</span></div><div class="pos-pl ${(c.profit||0)>=0?'green':'red'}" id="pos-pl-${c.id}">${(c.profit||0)>=0?'+':''}${(c.profit||0).toFixed(2)}</div><div style="font-size:0.75rem;color:var(--text-muted);">#${String(c.id).slice(-6)}</div></div>`).join('');
+  },
+  renderHistory() {
+    const tbody = document.getElementById('history-tbody');
+    if (!App.state.history.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:2rem;">No closed trades yet</td></tr>'; return; }
+    tbody.innerHTML = App.state.history.map(h => `<tr><td style="font-size:0.75rem;">${h.time}</td><td style="font-family:var(--font-mono);font-size:0.75rem;">${String(h.id).slice(-8)}</td><td>${h.symbol}</td><td>${h.type}</td><td>${h.stake.toFixed(2)}</td><td style="color:${h.profit>=0?'var(--green)':'var(--red)'};font-weight:600;">${h.profit>=0?'+':''}${h.profit.toFixed(2)}</td><td><span class="badge ${h.status==='WON'?'badge-win':'badge-loss'}">${h.status}</span></td></tr>`).join('');
+  },
+  renderMarkets() {
+    const container = document.getElementById('markets-container');
+    const catMap = { synthetic_index: { name: 'Derived Indices', icon: 'fa-bolt' }, forex: { name: 'Forex', icon: 'fa-exchange-alt' }, indices: { name: 'Stock Indices', icon: 'fa-chart-bar' }, commodities: { name: 'Commodities', icon: 'fa-coins' } };
+    container.innerHTML = Object.keys(Markets.categories).map(key => { const cat = Markets.categories[key]; const info = catMap[key] || { name: key, icon: 'fa-circle' }; return `<div class="market-cat-title"><i class="fas ${info.icon}" style="color:var(--green);margin-right:0.5rem;"></i> ${info.name}</div><div class="market-grid">${cat.items.map(s => `<div class="market-item ${Markets.activeSymbol===s.symbol?'active':''}" onclick="Markets.subscribe('${s.symbol}');UI.switchTab('trading');"><div><div class="market-name">${s.display_name}</div><div class="market-code">${s.symbol}</div></div><i class="fas fa-chart-line" style="color:var(--text-muted);font-size:0.8rem;"></i></div>`).join('')}</div>`; }).join('');
+  },
+  notify(msg, type = 'success') {
+    const n = document.getElementById('notif'); const icon = n.querySelector('i');
+    icon.className = type === 'error' ? 'fas fa-exclamation-circle' : 'fas fa-check-circle';
+    icon.style.color = type === 'error' ? 'var(--red)' : 'var(--green)';
+    document.getElementById('notif-text').textContent = msg; n.classList.add('show');
+    setTimeout(() => n.classList.remove('show'), 3500);
+  },
+  toggleFullscreen() { if (!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   HISTORY & SETTINGS & AI
+   ═══════════════════════════════════════════════════════════════ */
+const History = {
+  exportCSV() { if (!App.state.history.length) { UI.notify('No history to export'); return; } const rows = App.state.history.map(h => [h.time, h.id, h.symbol, h.type, h.stake, h.profit, h.status]); const csv = [['Time','ID','Symbol','Type','Stake','P&L','Status'], ...rows].map(r => r.map(c => `"${c}"`).join(',')).join('\n'); const blob = new Blob([csv], { type: 'text/csv' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `kimhub_history_${new Date().toISOString().slice(0,10)}.csv`; a.click(); URL.revokeObjectURL(url); UI.notify('History exported to CSV'); }
+};
+const Settings = { toggleSound() { App.state.soundEnabled = document.getElementById('setting-sound').checked; UI.notify(App.state.soundEnabled ? 'Sound ON' : 'Sound OFF'); } };
+const AI = {
+  open: false,
+  toggle() { this.open = !this.open; document.getElementById('ai-panel').style.display = this.open ? 'flex' : 'none'; },
+  send() {
+    const input = document.getElementById('ai-input'); const text = input.value.trim(); if (!text) return;
+    const container = document.getElementById('ai-messages');
+    const userMsg = document.createElement('div'); userMsg.style.cssText = 'background:var(--green-light);border-radius:8px;padding:0.6rem;color:var(--text);align-self:flex-end;max-width:85%;'; userMsg.textContent = text;
+    container.appendChild(userMsg);
+    input.value = ''; container.scrollTop = container.scrollHeight;
+    setTimeout(() => {
+      const botMsg = document.createElement('div'); botMsg.style.cssText = 'background:#f3e5f5;border-radius:8px;padding:0.6rem;color:var(--text);align-self:flex-start;max-width:85%;';
+      botMsg.innerHTML = `<b>KimHub AI:</b><br>I'm analyzing your request about "<i>${text}</i>".<br><br>For trading strategies, try loading a Quick Strategy in the Bot Editor. For market analysis, check the Charts panel.`;
+      container.appendChild(botMsg); container.scrollTop = container.scrollHeight;
+    }, 800);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   CLOCK
+   ═══════════════════════════════════════════════════════════════ */
+setInterval(() => {
+  const now = new Date();
+  const str = now.toISOString().slice(0,10) + ' ' + String(now.getUTCHours()).padStart(2,'0') + ':' + String(now.getUTCMinutes()).padStart(2,'0') + ':' + String(now.getUTCSeconds()).padStart(2,'0') + ' GMT';
+  const el = document.getElementById('run-bar-time'); if (el) el.textContent = str;
+}, 1000);
+
+/* ═══════════════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  Auth.init();
+  document.addEventListener('click', (e) => { const pill = document.querySelector('.acc-pill'); const dropdown = document.getElementById('acc-dropdown'); if (pill && dropdown && !pill.contains(e.target)) dropdown.classList.remove('show'); });
+  document.getElementById('auth-token-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') Auth.login(); });
+});
+</script>
+</body>
+</html>
